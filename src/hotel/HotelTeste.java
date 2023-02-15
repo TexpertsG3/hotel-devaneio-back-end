@@ -14,6 +14,7 @@ import exception.AlojamentoInexistenteException;
 import exception.DadosInvalidosException;
 import exception.DataInvalidaException;
 import exception.ServicoInexistenteException;
+import exception.UsuarioSemAcessoAdministrativoException;
 
 public class HotelTeste {
 
@@ -180,7 +181,7 @@ public class HotelTeste {
 				}
 					
 				Set<ServicoAdicional> servicosSelecionados = new HashSet<>();
-				System.out.println("Selecione os serviços adicionais (Ex. 1 3 5 ou 0 para nenhum): \n");
+				System.out.println("Selecione os serviços adicionais (Ex. 1 3 5 ou (0 para nenhum ou para sair da seleção)): \n");
 				Integer valor;
 
 				do {
@@ -271,6 +272,49 @@ public class HotelTeste {
 				break;
 
 			case 5:
+				
+				System.out.println("\nLogin administrativo:");
+				System.out.print("Email: ");
+				
+				String admEmail;
+				try {
+					admEmail = sc.nextLine();
+					if (!admEmail.equals(admin.getEmail()))
+						throw new UsuarioSemAcessoAdministrativoException("Email incorreto.");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+				System.out.print("Senha: ");
+				String admSenha;
+				try {
+					admSenha = sc.nextLine();
+					if (!admSenha.equals(admin.getSenha()))
+						throw new UsuarioSemAcessoAdministrativoException("Senha incorreta.");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+				Integer menuAdm;
+				do {
+					
+					System.out.printf("\n\n%s, seja bem vindo ao sistema administrativo. Escolha uma opção: \n\n", admin.getNome());
+					System.out.println("1 - Sistema de pagamentos administrativos");
+					System.out.println("2 - Sistema de alteração de reservas");
+					System.out.println("3 - Sistema para cadastro de novos administradores");
+					System.out.println("4 - Sistema para quitação de reservas");
+					System.out.println("0 - Sair do sistema administrativo");
+					
+					menuAdm = sc.nextInt();
+					sc.nextLine();
+					
+					switch (menuAdm) {
+					
+					default:
+						break;
+					}
+					
+				} while (!menuAdm.equals(0));
 
 				break;
 
