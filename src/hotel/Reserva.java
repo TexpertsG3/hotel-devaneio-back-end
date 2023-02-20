@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Reserva extends Hotel {
+public class Reserva {
 
 	private Alojamento quarto;
 	private LocalDate checkIn;
@@ -82,16 +82,7 @@ public class Reserva extends Hotel {
 	public void setServicoAdicional(Set<ServicoAdicional> servicoAdicional) {
 		this.servicoAdicional = servicoAdicional;
 	}
-	
-	public BigDecimal calculaValorServico(Set<ServicoAdicional> servicos) {
-		BigDecimal totalServico = BigDecimal.ZERO;
-		
-		for (ServicoAdicional servico : servicos) {
-			totalServico = totalServico.add(servico.getValorServico());
-		}
-		return totalServico;
-	}
-	
+			
 	public BigDecimal calculaValorDiaria(Reserva reserva) {
 		BigDecimal totalDiaria = BigDecimal.ZERO;
 		
@@ -108,9 +99,9 @@ public class Reserva extends Hotel {
 		return totalDiaria;
 	}
 	
-	public BigDecimal calculaTotal(Set<ServicoAdicional> servicoAdicional, Reserva reserva) {
+	public BigDecimal calculaTotalReserva(Set<ServicoAdicional> servicoAdicional, Reserva reserva) {
 		BigDecimal diaria = calculaValorDiaria(reserva);
-		BigDecimal servico = calculaValorServico(servicoAdicional);
+		BigDecimal servico = ServicoAdicional.calculaValorServico(servicoAdicional);
 		
 		BigDecimal total = BigDecimal.ZERO;
 		total = total.add(diaria).add(servico);

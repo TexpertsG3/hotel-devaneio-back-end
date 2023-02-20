@@ -1,50 +1,87 @@
 package hotel;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 public class Hotel {
-	
-	private static final String NOME_HOTEL = "DEVaneio";
-	private static final String ENDERECO_HOTEL = "Rua Fictícia, 988 - Jd. Indefinido - Neverland";
-	private static final String CNPJ_HOTEL = "85.885.588/0001-99";
 
-	private String nome;
-	private String endereco;
-	private String cnpj;
-	
-	protected Hotel() {
-		this.nome = NOME_HOTEL;
-		this.endereco = ENDERECO_HOTEL;
-		this.cnpj = CNPJ_HOTEL;
-		
+	private DadosHotel dadosHotel;
+	private List<Alojamento> listaDeAlojamentos = new ArrayList<>();
+	private List<ServicoAdicional> listaDeServicos = new ArrayList<>();
+	private Set<Funcionario> listaDeFuncionarios = new HashSet<>();
+	private Reserva reserva;
+
+	public Hotel() {
+
 	}
 	
-	public String getNome() {
-		return nome;
+	public Hotel(DadosHotel dadosHotel) {
+		this.dadosHotel = dadosHotel;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public Hotel(DadosHotel dadosHotel, List<Alojamento> listaDeAlojamentos, List<ServicoAdicional> listaDeServicos,
+			Set<Funcionario> listaDeFuncionarios, Reserva reserva) {
+
+		this.dadosHotel = dadosHotel;
+		this.listaDeAlojamentos = listaDeAlojamentos;
+		this.listaDeServicos = listaDeServicos;
+		this.listaDeFuncionarios = listaDeFuncionarios;
+		this.reserva = reserva;
 	}
 
-	public String getEndereco() {
-		return endereco;
-	}
-
-	public void setEndereco(String endereco) {
-		this.endereco = endereco;
-	}
-
-	public String getCnpj() {
-		return cnpj;
-	}
-
-	public void setCnpj(String cnpj) {
-		this.cnpj = cnpj;
-	}
 	
+
+	public DadosHotel getDadosHotel() {
+		return dadosHotel;
+	}
+
+	public void setDadosHotel(DadosHotel dadosHotel) {
+		this.dadosHotel = dadosHotel;
+	}
+
+	public List<Alojamento> getListaDeAlojamentos() {
+		return listaDeAlojamentos;
+	}
+
+	public void setListaDeAlojamentos(List<Alojamento> listaDeAlojamentos) {
+		this.listaDeAlojamentos = listaDeAlojamentos;
+	}
+
+	public List<ServicoAdicional> getListaDeServicos() {
+		return listaDeServicos;
+	}
+
+	public void setListaDeServicos(List<ServicoAdicional> listaDeServicos) {
+		this.listaDeServicos = listaDeServicos;
+	}
+
+	public Set<Funcionario> getListaDeFuncionarios() {
+		return listaDeFuncionarios;
+	}
+
+	public void setListaDeFuncionarios(Set<Funcionario> listaDeFuncionarios) {
+		this.listaDeFuncionarios = listaDeFuncionarios;
+	}
+
+	public Reserva getReserva() {
+		return reserva;
+	}
+
+	public void setReserva(Reserva reserva) {
+		this.reserva = reserva;
+	}
+
 	@Override
 	public String toString() {
-		
-		return "Hotel - " + this.nome + "\n" + "Endereço - " + this.endereco + "\n" + "CNPJ - " + this.cnpj;
+
+		return "Hotel - " + this.dadosHotel.getNome() + "\n" + "Rua - " + this.dadosHotel.getEndereco().getRua() +
+				"\n Bairro - " + this.dadosHotel.getEndereco().getBairro() + 
+				"\n Cidade - " + this.dadosHotel.getEndereco().getCidade() + 
+				"\n Estado - " + this.dadosHotel.getEndereco().getEstado() + 
+				"\n CEP - " + this.dadosHotel.getEndereco().getCep() + 
+				"\n" + "CNPJ - " + this.dadosHotel.getCnpj();
 	}
-	
+
 }

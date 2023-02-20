@@ -14,43 +14,43 @@ import exception.AlojamentoInexistenteException;
 import exception.DadosInvalidosException;
 import exception.DataInvalidaException;
 import exception.ServicoInexistenteException;
+import exception.UsuarioNaoCadastradoException;
 import exception.UsuarioSemAcessoAdministrativoException;
 
 public class HotelTeste {
 
 	public static void main(String[] args) {
-
-		final String ALOJAMENTO1 = "Quarto C#";
-		final String ALOJAMENTO2 = "Quarto C++";
-		final String ALOJAMENTO3 = "Quarto C";
 		
 		DateTimeFormatter dataFormatada = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		
-		Hotel hotel = new Hotel();
-		Alojamento alojamento1 = new Alojamento(ALOJAMENTO1, new BigDecimal("399.00"));
-		Alojamento alojamento2 = new Alojamento(ALOJAMENTO2, new BigDecimal("299.00"));
-		Alojamento alojamento3 = new Alojamento(ALOJAMENTO3, new BigDecimal("199.00"));
+		Scanner sc = new Scanner(System.in);
+		
+		Endereco endereco = new Endereco("Rua Fictícia", "Jd. Indefinido", "999", "13874-888", "Neverland", "Terra média");
+		
+		DadosHotel dadosHotel = new DadosHotel("Hotel DEVaneio", endereco , "01.001.002/0001-85", "devaneio@hotel.com", "(99)9999-9999");
+		
+		Hotel hotel = new Hotel(dadosHotel);
+		
+		Alojamento alojamentoJava = new Alojamento("Quarto Java", new BigDecimal("399.00"));
+		Alojamento alojamentoCsharp = new Alojamento("Quarto C#", new BigDecimal("299.00"));
+		Alojamento alojamentoCplusPlus = new Alojamento("Quarto C++", new BigDecimal("199.00"));
 
 		System.out.println("Hotel aberto com sucesso! \n");
 		System.out.println(hotel);
 		System.out.println("\n");
 
-		Scanner sc = new Scanner(System.in);
-
 		Usuario admin = new Usuario("ADMIN", "admin@admin.com", "admin", TipoUsuario.ADMIN);
-
+		
 		List<Alojamento> listaDeAlojamentos = new ArrayList<>();
-		listaDeAlojamentos.add(alojamento1);
-		listaDeAlojamentos.add(alojamento2);
-		listaDeAlojamentos.add(alojamento3);
+		listaDeAlojamentos.add(alojamentoJava);
+		listaDeAlojamentos.add(alojamentoCsharp);
+		listaDeAlojamentos.add(alojamentoCplusPlus);
+		
+		hotel.setListaDeAlojamentos(listaDeAlojamentos);
 
-		List<ServicoAdicional> listaDeServicos = new ArrayList<>();
-		listaDeServicos.add(ServicoAdicional.AUTITORIO_DE_EVENTOS);
-		listaDeServicos.add(ServicoAdicional.ESPACO_KIDS);
-		listaDeServicos.add(ServicoAdicional.GUIA_TURISTICO);
-		listaDeServicos.add(ServicoAdicional.PASSEIO_NAS_DUNAS);
-		listaDeServicos.add(ServicoAdicional.TRATAMENTO_SPA);
-
+		List<ServicoAdicional> listaDeServicos = ServicoAdicional.gerarListaDeServicos();
+		hotel.setListaDeServicos(listaDeServicos);
+		
 		int contador;
 		Integer opcaoMenu;
 		String nomeUsuario;
@@ -117,21 +117,25 @@ public class HotelTeste {
 				break;
 
 			case 2:
-
+				if(usuario == null) {
+					throw new UsuarioNaoCadastradoException("Não existe um usuário cadastrado para realizar a reserva.");
+				}
+				
 				System.out.print("Escolha seu alojamento (1, 2 ou 3): ");
 				numeroAlojamento = sc.nextInt();
 				sc.nextLine();
+				
 				Alojamento alojamentoEscolhido;
 
 				switch (numeroAlojamento) {
 				case 1:
-					alojamentoEscolhido = alojamento1;
+					alojamentoEscolhido = alojamentoJava;
 					break;
 				case 2:
-					alojamentoEscolhido = alojamento2;
+					alojamentoEscolhido = alojamentoCsharp;
 					break;
 				case 3:
-					alojamentoEscolhido = alojamento3;
+					alojamentoEscolhido = alojamentoCplusPlus;
 					break;
 				default:
 					throw new AlojamentoInexistenteException("Alojamento inexistente no hotel.");
@@ -208,25 +212,23 @@ public class HotelTeste {
 						break;
 					default:
 						throw new ServicoInexistenteException(
-								"Serviço não existe no catálogo. Favor selecionar um dos serviços disponíveis");
+								"Serviço não existente no catálogo. Favor selecionar um dos serviços disponíveis");
 
 					}
 
 				} while (!valor.equals(0));
 
-				if (usuario != null) {
-					Reserva reserva = new Reserva(alojamentoEscolhido, checkIn, checkOut, usuario, quantidaDeAdultos,
+				Reserva reserva = new Reserva(alojamentoEscolhido, checkIn, checkOut, usuario, quantidaDeAdultos,
 							quantidaDeCriancas, servicosSelecionados);
-					System.out.println();
-					System.out.println(reserva);
-					System.out.println();
-					System.out.println("Valor dos serviços: R$" + reserva.calculaValorServico(servicosSelecionados));
-					System.out.println("Valor da diária: R$" + reserva.calculaValorDiaria(reserva));
-					System.out.println();
-					System.out.printf("\nValor total dos serviços e diárias: R$%.2f\n", reserva.calculaTotal(servicosSelecionados, reserva));
-				}
-
+				hotel.setReserva(reserva);
 				
+				System.out.println();
+				System.out.println(hotel.getReserva());
+				System.out.println();
+				System.out.println("Valor dos serviços: R$" + ServicoAdicional.calculaValorServico(servicosSelecionados));
+				System.out.println("Valor da diária: R$" + hotel.getReserva().calculaValorDiaria(reserva));
+				System.out.println();
+				System.out.printf("\nValor total dos serviços e diárias: R$%.2f\n", hotel.getReserva().calculaTotalReserva(servicosSelecionados, reserva));
 
 				try {
 					Thread.sleep(3000);

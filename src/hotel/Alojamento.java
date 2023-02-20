@@ -28,11 +28,10 @@ public class Alojamento{
 		this.valor = valor;
 	}
 	
-	
 	@Override
 	public String toString() {
 		
-		return "Alojamento - " + this.nomeAlojamento + "\n" + "Valor da diária - R$" + String.valueOf(this.valor);
+		return "Alojamento - " + this.nomeAlojamento + "\n" + "Valor da diária - R$" + this.valor;
 	}
 
 }

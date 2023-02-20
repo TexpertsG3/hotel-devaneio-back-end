@@ -3,6 +3,7 @@ package hotel;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public enum ServicoAdicional {
 	
@@ -36,16 +37,29 @@ public enum ServicoAdicional {
 		return resultado;
 	}
 	
-	public static List<ServicoAdicional> adicionarServicos(ServicoAdicional servico) {
-		List<ServicoAdicional> listaTemp = new ArrayList<>();
-		listaTemp.add(servico);
-		return listaTemp;
+	public static BigDecimal calculaValorServico(Set<ServicoAdicional> servicos) {
+		BigDecimal totalServico = BigDecimal.ZERO;
+		
+		for (ServicoAdicional servico : servicos) {
+			totalServico = totalServico.add(servico.getValorServico());
+		}
+		return totalServico;
 	}
 	
+	public static List<ServicoAdicional> gerarListaDeServicos() {
+		List<ServicoAdicional> lista = new ArrayList<>();
+		lista.add(GUIA_TURISTICO);
+		lista.add(PASSEIO_NAS_DUNAS);
+		lista.add(TRATAMENTO_SPA);
+		lista.add(AUTITORIO_DE_EVENTOS);
+		lista.add(ESPACO_KIDS);
+		return lista;
+	}
+			
 	@Override
 	public String toString() {
 		
-		return getNomeServico() + "\n" + "Valor - R$" + getValorServico();
+		return this.nomeServico + "\n" + "Valor - R$" + this.valorServico + "\n";
 	}
 
 }
