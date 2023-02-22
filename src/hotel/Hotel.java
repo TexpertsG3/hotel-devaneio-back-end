@@ -77,11 +77,11 @@ public class Hotel {
 	public String toString() {
 
 		return "Hotel - " + this.dadosHotel.getNome() + "\n" + "Rua - " + this.dadosHotel.getEndereco().getRua() +
-				"\n Bairro - " + this.dadosHotel.getEndereco().getBairro() + 
-				"\n Cidade - " + this.dadosHotel.getEndereco().getCidade() + 
-				"\n Estado - " + this.dadosHotel.getEndereco().getEstado() + 
-				"\n CEP - " + this.dadosHotel.getEndereco().getCep() + 
-				"\n" + "CNPJ - " + this.dadosHotel.getCnpj();
+				"\nBairro - " + this.dadosHotel.getEndereco().getBairro() + 
+				"\nCidade - " + this.dadosHotel.getEndereco().getCidade() + 
+				"\nEstado - " + this.dadosHotel.getEndereco().getEstado() + 
+				"\nCEP - " + this.dadosHotel.getEndereco().getCep() + 
+				"\nCNPJ - " + this.dadosHotel.getCnpj();
 	}
 
 }
