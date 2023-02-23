@@ -121,6 +121,16 @@ public class HotelTeste {
 					throw new UsuarioNaoCadastradoException("Não existe um usuário cadastrado para realizar a reserva.");
 				}
 				
+				System.out.println("\nTemos os seguintes alojamentos disponíveis: \n");
+
+				contador = 0;
+				for (Alojamento alojamento : listaDeAlojamentos) {
+
+					System.out.print(++contador + " - ");
+					System.out.println(alojamento);
+					System.out.println();
+				}
+				
 				System.out.print("Escolha seu alojamento (1, 2 ou 3): ");
 				numeroAlojamento = sc.nextInt();
 				sc.nextLine();
