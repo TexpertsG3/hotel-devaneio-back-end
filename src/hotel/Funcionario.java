@@ -12,10 +12,10 @@ public class Funcionario {
 	
 	private String nome;
 	private String sobrenome;
-	private String cargo;
+	private Cargo cargo;
 	private BigDecimal salario;
 	
-	public Funcionario(String nome, String sobrenome, String cargo, BigDecimal salario) {
+	public Funcionario(String nome, String sobrenome, Cargo cargo, BigDecimal salario) {
 		this.nome = nome;
 		this.sobrenome = sobrenome;
 		this.cargo = cargo;
@@ -38,11 +38,11 @@ public class Funcionario {
 		this.sobrenome = sobrenome;
 	}
 
-	public String getCargo() {
+	public Cargo getCargo() {
 		return cargo;
 	}
 
-	public void setCargo(String cargo) {
+	public void setCargo(Cargo cargo) {
 		this.cargo = cargo;
 	}
 
@@ -77,7 +77,7 @@ public class Funcionario {
 
 	@Override
 	public String toString() {
-		return "Nome: " + this.nome
+		return "\nNome: " + this.nome
 				+ "\nSobrenome: " + this.sobrenome
 				+ "\nCargo: " + this.cargo
 				+ "\nSalário: R$" + this.salario;

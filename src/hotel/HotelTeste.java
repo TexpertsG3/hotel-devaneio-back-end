@@ -301,8 +301,8 @@ public class HotelTeste {
 				do {
 					
 					System.out.printf("\n\n%s, seja bem vindo ao sistema administrativo. Escolha uma opção: \n\n", admin.getNome());
-					System.out.println("1 - Sistema de pagamentos administrativos");
-					System.out.println("2 - Sistema de alteração de reservas");
+					System.out.println("1 - Cadastro de funcionários");
+					System.out.println("2 - Consulta de funcionários");
 					System.out.println("3 - Sistema para cadastro de novos administradores");
 					System.out.println("4 - Sistema para quitação de reservas");
 					System.out.println("0 - Sair do sistema administrativo");
@@ -310,8 +310,29 @@ public class HotelTeste {
 					menuAdm = sc.nextInt();
 					sc.nextLine();
 					
-					switch (menuAdm) {
-					
+					switch (menuAdm) {						
+					case 1: 
+						System.out.print("\nDigite o nome do funcionário: ");
+						String nomeFuncionario = sc.nextLine();
+						System.out.print("\nDigite o sobrenome do funcionário: ");
+						String sobrenomeFuncionario = sc.nextLine();
+						System.out.print("\nDigite o cargo do funcionário: ");
+						String cargoDoFuncionario = sc.nextLine();
+						System.out.print("\nDigite o salário do funcionário: ");
+						String salarioDoFuncionario = sc.nextLine();
+						
+						Funcionario funcionario = new Funcionario(nomeFuncionario, sobrenomeFuncionario, new Cargo(cargoDoFuncionario), new BigDecimal(salarioDoFuncionario));
+						System.out.printf("\nO funcionário %s foi cadastrado com sucesso!\n", funcionario.getNome());
+						System.out.println(funcionario);
+						hotel.getListaDeFuncionarios().add(funcionario);
+						
+						break;
+					case 2: 
+						System.out.printf("\nFuncionários do hotel %s:\n", hotel.getDadosHotel().getNome());
+						for (Funcionario funcionarioCadastrado : hotel.getListaDeFuncionarios()) {
+							System.out.println(funcionarioCadastrado);
+							}
+						break;
 					default:
 						break;
 					}
