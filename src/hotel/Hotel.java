@@ -1,5 +1,6 @@
 package hotel;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -71,6 +72,14 @@ public class Hotel {
 
 	public void setReserva(Reserva reserva) {
 		this.reserva = reserva;
+	}
+	
+	public void cadastrarQuarto(String quarto, BigDecimal preco) {
+		this.listaDeAlojamentos.add(new Alojamento(quarto, preco));
+	}
+	
+	public void cadastrarServicoAdicional(ServicoAdicional servico) {
+		this.listaDeServicos.add(servico);
 	}
 
 	@Override

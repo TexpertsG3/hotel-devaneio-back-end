@@ -2,51 +2,81 @@ package hotel;
 
 import java.util.Objects;
 
-public class Usuario {
+public class Hospede {
 
 	private String nome;
+	private String sobrenome;
+	private String cpf;
 	private String email;
 	private String senha;
-	private TipoUsuario tipoUsuario;
-
-	public Usuario(String nome, String email, String senha, TipoUsuario tipoUsuario) {
+	
+	public Hospede(String nome, String sobrenome, String cpf, String email, String senha) {
 		this.nome = nome;
+		this.sobrenome = sobrenome;
+		this.cpf = cpf;
 		this.email = email;
 		this.senha = senha;
-		this.tipoUsuario = tipoUsuario;
 	}
-
+	
 	public String getNome() {
 		return nome;
 	}
+
+
 
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
 
+
+
+	public String getSobrenome() {
+		return sobrenome;
+	}
+
+
+
+	public void setSobrenome(String sobrenome) {
+		this.sobrenome = sobrenome;
+	}
+
+
+
+	public String getCpf() {
+		return cpf;
+	}
+
+
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+
+
 	public String getEmail() {
 		return email;
 	}
+
+
 
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
+
+
 	public String getSenha() {
 		return senha;
 	}
+
+
 
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
 
-	public TipoUsuario getTipoUsuario() {
-		return tipoUsuario;
-	}
 
-	public void setTipoUsuario(TipoUsuario tipoUsuario) {
-		this.tipoUsuario = tipoUsuario;
-	}
 
 	@Override
 	public int hashCode() {
@@ -61,7 +91,7 @@ public class Usuario {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Usuario other = (Usuario) obj;
+		Hospede other = (Hospede) obj;
 		return Objects.equals(email, other.email) && Objects.equals(senha, other.senha);
 	}
 	

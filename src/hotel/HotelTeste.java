@@ -4,9 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -30,34 +28,32 @@ public class HotelTeste {
 		DadosHotel dadosHotel = new DadosHotel("Hotel DEVaneio", endereco , "01.001.002/0001-85", "devaneio@hotel.com", "(99)9999-9999");
 		
 		Hotel hotel = new Hotel(dadosHotel);
-		
-		Alojamento alojamentoJava = new Alojamento("Quarto Java", new BigDecimal("399.00"));
-		Alojamento alojamentoCsharp = new Alojamento("Quarto C#", new BigDecimal("299.00"));
-		Alojamento alojamentoCplusPlus = new Alojamento("Quarto C++", new BigDecimal("199.00"));
 
 		System.out.println("Hotel aberto com sucesso! \n");
 		System.out.println(hotel);
 		System.out.println("\n");
 
-		Usuario admin = new Usuario("ADMIN", "admin@admin.com", "admin", TipoUsuario.ADMIN);
+		Admin admin = new Admin("ADMIN", "admin@admin.com", "admin");
 		
-		List<Alojamento> listaDeAlojamentos = new ArrayList<>();
-		listaDeAlojamentos.add(alojamentoJava);
-		listaDeAlojamentos.add(alojamentoCsharp);
-		listaDeAlojamentos.add(alojamentoCplusPlus);
+		hotel.cadastrarQuarto("Quarto Java", new BigDecimal("399.00"));
+		hotel.cadastrarQuarto("Quarto C#", new BigDecimal("299.00"));
+		hotel.cadastrarQuarto("Quarto C++", new BigDecimal("199.00"));
 		
-		hotel.setListaDeAlojamentos(listaDeAlojamentos);
-
-		List<ServicoAdicional> listaDeServicos = ServicoAdicional.gerarListaDeServicos();
-		hotel.setListaDeServicos(listaDeServicos);
+		hotel.cadastrarServicoAdicional(ServicoAdicional.AUTITORIO_DE_EVENTOS);
+		hotel.cadastrarServicoAdicional(ServicoAdicional.ESPACO_KIDS);
+		hotel.cadastrarServicoAdicional(ServicoAdicional.PASSEIO_NAS_DUNAS);
+		hotel.cadastrarServicoAdicional(ServicoAdicional.TRATAMENTO_SPA);
+		hotel.cadastrarServicoAdicional(ServicoAdicional.GUIA_TURISTICO);
 		
 		int contador;
 		Integer opcaoMenu;
-		String nomeUsuario;
-		String emailUsuario;
-		String senhaUsuario;
+		String nomeHospede;
+		String sobrenomeHospede;
+		String cpfHospede;
+		String emailHospede;
+		String senhaHospede;
 		Integer numeroAlojamento;
-		Usuario usuario = null;
+		Hospede hospede = null;
 
 		do {
 
@@ -81,16 +77,34 @@ public class HotelTeste {
 				System.out.print("Nome: ");
 				try {
 
-					nomeUsuario = sc.nextLine();
+					nomeHospede = sc.nextLine();
 
 				} catch (Exception e) {
 					throw new DadosInvalidosException("Nome inválido.");
+				}
+				
+				System.out.print("Sobrenome: ");
+				try {
+
+					sobrenomeHospede = sc.nextLine();
+
+				} catch (Exception e) {
+					throw new DadosInvalidosException("Sobrenome inválido.");
+				}
+				
+				System.out.print("CPF: ");
+				try {
+
+					cpfHospede = sc.nextLine();
+
+				} catch (Exception e) {
+					throw new DadosInvalidosException("CPF inválido.");
 				}
 
 				System.out.print("Email: ");
 				try {
 
-					emailUsuario = sc.nextLine();
+					emailHospede = sc.nextLine();
 
 				} catch (Exception e) {
 					throw new DadosInvalidosException("Email inválido.");
@@ -99,15 +113,15 @@ public class HotelTeste {
 				System.out.print("Senha: ");
 				try {
 
-					senhaUsuario = sc.nextLine();
+					senhaHospede = sc.nextLine();
 
 				} catch (Exception e) {
 					throw new DadosInvalidosException("Senha inválida.");
 				}
 
-				usuario = new Usuario(nomeUsuario, emailUsuario, senhaUsuario, TipoUsuario.CLIENTE);
+				hospede = new Hospede(nomeHospede, sobrenomeHospede, cpfHospede, emailHospede, senhaHospede);
 
-				System.out.printf("\nCliente %s, cadastrado com sucesso. \n\n\n", usuario.getNome());
+				System.out.printf("\nCliente %s, cadastrado com sucesso. \n\n\n", hospede.getNome());
 
 				try {
 					Thread.sleep(3000);
@@ -117,14 +131,14 @@ public class HotelTeste {
 				break;
 
 			case 2:
-				if(usuario == null) {
+				if(hospede == null) {
 					throw new UsuarioNaoCadastradoException("Não existe um usuário cadastrado para realizar a reserva.");
 				}
 				
 				System.out.println("\nTemos os seguintes alojamentos disponíveis: \n");
 
 				contador = 0;
-				for (Alojamento alojamento : listaDeAlojamentos) {
+				for (Alojamento alojamento : hotel.getListaDeAlojamentos()) {
 
 					System.out.print(++contador + " - ");
 					System.out.println(alojamento);
@@ -139,13 +153,13 @@ public class HotelTeste {
 
 				switch (numeroAlojamento) {
 				case 1:
-					alojamentoEscolhido = alojamentoJava;
+					alojamentoEscolhido = hotel.getListaDeAlojamentos().get(0);
 					break;
 				case 2:
-					alojamentoEscolhido = alojamentoCsharp;
+					alojamentoEscolhido = hotel.getListaDeAlojamentos().get(1);
 					break;
 				case 3:
-					alojamentoEscolhido = alojamentoCplusPlus;
+					alojamentoEscolhido = hotel.getListaDeAlojamentos().get(2);
 					break;
 				default:
 					throw new AlojamentoInexistenteException("Alojamento inexistente no hotel.");
@@ -187,7 +201,7 @@ public class HotelTeste {
 				System.out.println("\nTemos os seguintes serviços adicionais disponíveis: \n");
 				
 				contador = 0;
-				for (ServicoAdicional servico : listaDeServicos) {
+				for (ServicoAdicional servico : hotel.getListaDeServicos()) {
 
 					System.out.print(++contador + " - ");
 					System.out.println(servico);
@@ -206,19 +220,19 @@ public class HotelTeste {
 					case 0:
 						break;
 					case 1:
-						servicosSelecionados.add(listaDeServicos.get(0));
+						servicosSelecionados.add(hotel.getListaDeServicos().get(0));
 						break;
 					case 2:
-						servicosSelecionados.add(listaDeServicos.get(1));
+						servicosSelecionados.add(hotel.getListaDeServicos().get(1));
 						break;
 					case 3:
-						servicosSelecionados.add(listaDeServicos.get(2));
+						servicosSelecionados.add(hotel.getListaDeServicos().get(2));
 						break;
 					case 4:
-						servicosSelecionados.add(listaDeServicos.get(3));
+						servicosSelecionados.add(hotel.getListaDeServicos().get(3));
 						break;
 					case 5:
-						servicosSelecionados.add(listaDeServicos.get(4));
+						servicosSelecionados.add(hotel.getListaDeServicos().get(4));
 						break;
 					default:
 						throw new ServicoInexistenteException(
@@ -228,7 +242,7 @@ public class HotelTeste {
 
 				} while (!valor.equals(0));
 
-				Reserva reserva = new Reserva(alojamentoEscolhido, checkIn, checkOut, usuario, quantidaDeAdultos,
+				Reserva reserva = new Reserva(alojamentoEscolhido, checkIn, checkOut, hospede, quantidaDeAdultos,
 							quantidaDeCriancas, servicosSelecionados);
 				hotel.setReserva(reserva);
 				
@@ -251,7 +265,7 @@ public class HotelTeste {
 				System.out.println("\nTemos os seguintes alojamentos disponíveis: \n");
 
 				contador = 0;
-				for (Alojamento alojamento : listaDeAlojamentos) {
+				for (Alojamento alojamento : hotel.getListaDeAlojamentos()) {
 
 					System.out.print(++contador + " - ");
 					System.out.println(alojamento);
@@ -269,7 +283,7 @@ public class HotelTeste {
 				System.out.println("\nTemos os seguintes serviços adicionais disponíveis: \n");
 
 				contador = 0;
-				for (ServicoAdicional servico : listaDeServicos) {
+				for (ServicoAdicional servico : hotel.getListaDeServicos()) {
 
 					System.out.print(++contador + " - ");
 					System.out.println(servico);

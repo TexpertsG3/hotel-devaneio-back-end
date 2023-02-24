@@ -11,12 +11,12 @@ public class Reserva {
 	private Alojamento quarto;
 	private LocalDate checkIn;
 	private LocalDate checkOut;
-	private Usuario usuario;
+	private Hospede usuario;
 	private Integer quantidadeAdultos;
 	private Integer quantidadeCriancas;
 	private Set<ServicoAdicional> servicoAdicional = new HashSet<>();
 
-	public Reserva(Alojamento quarto, LocalDate checkIn, LocalDate checkOut, Usuario usuario,
+	public Reserva(Alojamento quarto, LocalDate checkIn, LocalDate checkOut, Hospede usuario,
 			Integer quantidadeAdultos, Integer quantidadeCriancas, Set<ServicoAdicional> servicoAdicional) {
 		this.quarto = quarto;
 		this.checkIn = checkIn;
@@ -51,11 +51,11 @@ public class Reserva {
 		this.checkOut = checkOut;
 	}
 
-	public Usuario getUsuario() {
+	public Hospede getUsuario() {
 		return usuario;
 	}
 
-	public void setUsuario(Usuario usuario) {
+	public void setUsuario(Hospede usuario) {
 		this.usuario = usuario;
 	}
 
