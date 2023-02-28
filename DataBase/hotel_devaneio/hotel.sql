@@ -6,7 +6,6 @@ create table hotel
     id_funcionario       int          not null,
     id_administrador     int          not null,
     id_servico_adicional int          not null,
-    id_quarto            int          not null,
     id_hospede           int unsigned not null,
     constraint fk_hotel_administrador
         foreign key (id_administrador) references administrador (id_administrador),
@@ -16,8 +15,6 @@ create table hotel
         foreign key (id_funcionario) references funcionario (id_funcionario),
     constraint fk_hotel_hospede
         foreign key (id_hospede) references hospede (id_hospede),
-    constraint fk_hotel_quarto
-        foreign key (id_quarto) references quarto (id_quarto),
     constraint fk_hotel_servico_adicional
         foreign key (id_servico_adicional) references servico_adicional (id_servico_adicional)
 );
@@ -33,9 +30,6 @@ create index fk_hotel_funcionario_idx
 
 create index fk_hotel_hospede_idx
     on hotel (id_hospede);
-
-create index fk_hotel_quarto_idx
-    on hotel (id_quarto);
 
 create index fk_hotel_servico_adicional_idx
     on hotel (id_servico_adicional);

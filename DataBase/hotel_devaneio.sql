@@ -57,13 +57,13 @@ create table administrador
         foreign key (id_endereco) references endereco (id_endereco)
 );
 
-create index fk_administrador_contato1_idx
+create index fk_administrador_contato_idx
     on administrador (id_contato);
 
-create index fk_administrador_endereco1_idx
+create index fk_administrador_endereco_idx
     on administrador (id_endereco);
 
-create index fk_contato_hospede1_idx
+create index fk_contato_hospede_idx
     on contato (hospede_id_hospede);
 
 create table dados_hotel
@@ -82,10 +82,10 @@ create table dados_hotel
         foreign key (id_endereco) references endereco (id_endereco)
 );
 
-create index fk_dados_hotel_contato1_idx
+create index fk_dados_hotel_contato_idx
     on dados_hotel (id_contato);
 
-create index fk_dados_hotel_endereco1_idx
+create index fk_dados_hotel_endereco_idx
     on dados_hotel (id_endereco);
 
 create table funcionario
@@ -108,13 +108,13 @@ create table funcionario
         foreign key (id_endereco) references endereco (id_endereco)
 );
 
-create index fk_funcionario_cargo1_idx
+create index fk_funcionario_cargo_idx
     on funcionario (id_cargo);
 
-create index fk_funcionario_contato1_idx
+create index fk_funcionario_contato_idx
     on funcionario (id_contato);
 
-create index fk_funcionario_endereco1_idx
+create index fk_funcionario_endereco_idx
     on funcionario (id_endereco);
 
 create table promocao
@@ -153,7 +153,6 @@ create table hotel
     id_funcionario       int          not null,
     id_administrador     int          not null,
     id_servico_adicional int          not null,
-    id_quarto            int          not null,
     id_hospede           int unsigned not null,
     constraint fk_hotel_administrador
         foreign key (id_administrador) references administrador (id_administrador),
@@ -163,28 +162,23 @@ create table hotel
         foreign key (id_funcionario) references funcionario (id_funcionario),
     constraint fk_hotel_hospede
         foreign key (id_hospede) references hospede (id_hospede),
-    constraint fk_hotel_quarto
-        foreign key (id_quarto) references quarto (id_quarto),
     constraint fk_hotel_servico_adicional
         foreign key (id_servico_adicional) references servico_adicional (id_servico_adicional)
 );
 
-create index fk_hotel_administrador1_idx
+create index fk_hotel_administrador_idx
     on hotel (id_administrador);
 
-create index fk_hotel_dadosHotel1_idx
+create index fk_hotel_dadosHotel_idx
     on hotel (id_dados_hotel);
 
-create index fk_hotel_funcionario1_idx
+create index fk_hotel_funcionario_idx
     on hotel (id_funcionario);
 
-create index fk_hotel_hospede1_idx
+create index fk_hotel_hospede_idx
     on hotel (id_hospede);
 
-create index fk_hotel_quarto1_idx
-    on hotel (id_quarto);
-
-create index fk_hotel_servico_adicional1_idx
+create index fk_hotel_servico_adicional_idx
     on hotel (id_servico_adicional);
 
 create table reserva
@@ -202,50 +196,4 @@ create table reserva
     constraint fk_reserva_servico_adicional
         foreign key (id_servico_adicional) references servico_adicional (id_servico_adicional)
 );
-
-create table pedido
-(
-    id_pedido            int auto_increment
-        primary key,
-    valot_total          decimal(10, 2) unsigned not null,
-    valor_desconto       decimal(10, 2) unsigned null,
-    id_reserva           int                     not null,
-    id_servico_adicional int                     not null,
-    id_promocao          int                     not null,
-    constraint fk_pedido_promocao
-        foreign key (id_promocao) references promocao (id_promocao),
-    constraint fk_pedido_reserva
-        foreign key (id_reserva, id_servico_adicional) references reserva (id_reserva, id_servico_adicional)
-);
-
-create index fk_pedido_promocao1_idx
-    on pedido (id_promocao);
-
-create index fk_pedido_reserva1_idx
-    on pedido (id_reserva, id_servico_adicional);
-
-create index fk_reserva_quarto1_idx
-    on reserva (id_quarto);
-
-create index fk_reserva_servico_adicional1_idx
-    on reserva (id_servico_adicional);
-
-create table reserva_has_hospede
-(
-    id_reserva                                     int          not null,
-    reserva_servico_adicional_id_servico_adicional int          not null,
-    hospede_id_hospede                             int unsigned not null,
-    primary key (id_reserva, reserva_servico_adicional_id_servico_adicional, hospede_id_hospede),
-    constraint fk_reserva_has_hospede_hospede1
-        foreign key (hospede_id_hospede) references hospede (id_hospede),
-    constraint fk_reserva_has_hospede_reserva1
-        foreign key (id_reserva, reserva_servico_adicional_id_servico_adicional) references reserva (id_reserva, id_servico_adicional)
-);
-
-create index fk_reserva_has_hospede_hospede1_idx
-    on reserva_has_hospede (hospede_id_hospede);
-
-create index fk_reserva_has_hospede_reserva1_idx
-    on reserva_has_hospede (id_reserva, reserva_servico_adicional_id_servico_adicional);
-
 
