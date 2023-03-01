@@ -38,13 +38,15 @@ public class HotelTeste {
 		hotel.cadastrarQuarto("Quarto Java", new BigDecimal("399.00"));
 		hotel.cadastrarQuarto("Quarto C#", new BigDecimal("299.00"));
 		hotel.cadastrarQuarto("Quarto C++", new BigDecimal("199.00"));
-		
-		hotel.cadastrarServicoAdicional(ServicoAdicional.AUTITORIO_DE_EVENTOS);
-		hotel.cadastrarServicoAdicional(ServicoAdicional.ESPACO_KIDS);
-		hotel.cadastrarServicoAdicional(ServicoAdicional.PASSEIO_NAS_DUNAS);
-		hotel.cadastrarServicoAdicional(ServicoAdicional.TRATAMENTO_SPA);
-		hotel.cadastrarServicoAdicional(ServicoAdicional.GUIA_TURISTICO);
-		
+
+
+		hotel.cadastrarServico("Auditório de Eventos", new BigDecimal("150.00"));
+		hotel.cadastrarServico("Espaço Kids", new BigDecimal("230.00"));
+		hotel.cadastrarServico("Passeio nas Dunas", new BigDecimal("180.00"));
+		hotel.cadastrarServico("Tratamento de Spa", new BigDecimal("300.00"));
+		hotel.cadastrarServico("Guia Turístico", new BigDecimal("100.00"));
+
+
 		int contador;
 		Integer opcaoMenu;
 		String nomeHospede;
@@ -249,10 +251,10 @@ public class HotelTeste {
 				System.out.println();
 				System.out.println(hotel.getReserva());
 				System.out.println();
-				System.out.println("Valor dos serviços: R$" + ServicoAdicional.calculaValorServico(servicosSelecionados));
-				System.out.println("Valor da diária: R$" + hotel.getReserva().calculaValorDiaria(reserva));
+				System.out.println("Valor dos serviços: R$" + hotel.calculaValorServico(servicosSelecionados));
+				System.out.println("Valor da diária: R$" + hotel.calculaValorDiaria(reserva));
 				System.out.println();
-				System.out.printf("\nValor total dos serviços e diárias: R$%.2f\n", hotel.getReserva().calculaTotalReserva(servicosSelecionados, reserva));
+				System.out.printf("\nValor total dos serviços e diárias: R$%.2f\n", hotel.calculaTotalReserva(servicosSelecionados, reserva));
 
 				try {
 					Thread.sleep(3000);

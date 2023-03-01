@@ -83,31 +83,7 @@ public class Reserva {
 		this.servicoAdicional = servicoAdicional;
 	}
 			
-	public BigDecimal calculaValorDiaria(Reserva reserva) {
-		BigDecimal totalDiaria = BigDecimal.ZERO;
-		
-		if (quantidadeAdultos > 2) {
-			BigDecimal temp = new BigDecimal(quantidadeAdultos-2).multiply(BigDecimal.valueOf(10.00));
-			totalDiaria = totalDiaria.add(temp);
-		}
-		
-		Integer dias = Integer.valueOf(checkOut.getDayOfYear() - checkIn.getDayOfYear());
-		
-		totalDiaria = totalDiaria.add(quarto.getValor());
-		totalDiaria = totalDiaria.multiply(new BigDecimal(dias));
-		
-		return totalDiaria;
-	}
-	
-	public BigDecimal calculaTotalReserva(Set<ServicoAdicional> servicoAdicional, Reserva reserva) {
-		BigDecimal diaria = calculaValorDiaria(reserva);
-		BigDecimal servico = ServicoAdicional.calculaValorServico(servicoAdicional);
-		
-		BigDecimal total = BigDecimal.ZERO;
-		total = total.add(diaria).add(servico);
-		
-		return total;
-	}
+
 
 	@Override
 	public String toString() {

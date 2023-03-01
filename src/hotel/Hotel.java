@@ -73,6 +73,37 @@ public class Hotel {
 	public void setReserva(Reserva reserva) {
 		this.reserva = reserva;
 	}
+
+	public BigDecimal calculaValorDiaria(Reserva reserva) {
+		BigDecimal totalDiaria = BigDecimal.ZERO;
+
+		if (reserva.getQuantidadeAdultos() > 2) {
+			BigDecimal temp = new BigDecimal(reserva.getQuantidadeAdultos()-2).multiply(BigDecimal.valueOf(10.00));
+			totalDiaria = totalDiaria.add(temp);
+		}
+
+		if (reserva.getQuantidadeCriancas() > 2) {
+			BigDecimal temp = new BigDecimal(reserva.getQuantidadeCriancas()-2).multiply(BigDecimal.valueOf(5.00));
+			totalDiaria = totalDiaria.add(temp);
+		}
+
+		Integer dias = Integer.valueOf(reserva.getCheckOut().getDayOfYear() - reserva.getCheckIn().getDayOfYear());
+
+		totalDiaria = totalDiaria.add(reserva.getQuarto().getValor());
+		totalDiaria = totalDiaria.multiply(new BigDecimal(dias));
+
+		return totalDiaria;
+	}
+
+	public BigDecimal calculaTotalReserva(Set<ServicoAdicional> servicoAdicional, Reserva reserva) {
+		BigDecimal diaria = calculaValorDiaria(reserva);
+		BigDecimal servico = calculaValorServico(servicoAdicional);
+
+		BigDecimal total = BigDecimal.ZERO;
+		total = total.add(diaria).add(servico);
+
+		return total;
+	}
 	
 	public void cadastrarQuarto(String quarto, BigDecimal preco) {
 		this.listaDeAlojamentos.add(new Alojamento(quarto, preco));
@@ -81,6 +112,29 @@ public class Hotel {
 	public void cadastrarServicoAdicional(ServicoAdicional servico) {
 		this.listaDeServicos.add(servico);
 	}
+
+	public static BigDecimal somaServicos(List<ServicoAdicional> servicos) {
+		BigDecimal resultado = BigDecimal.ZERO;
+		for (ServicoAdicional servico : servicos) {
+			resultado = resultado.add(servico.getValorServico());
+		}
+		return resultado;
+	}
+
+	public BigDecimal calculaValorServico(Set<ServicoAdicional> servicos) {
+		BigDecimal totalServico = BigDecimal.ZERO;
+
+		for (ServicoAdicional servico : servicos) {
+			totalServico = totalServico.add(servico.getValorServico());
+		}
+		return totalServico;
+	}
+
+	public void cadastrarServico(String servico, BigDecimal valorServico) {
+		this.listaDeServicos.add(new ServicoAdicional(servico, valorServico));
+	}
+
+
 
 	@Override
 	public String toString() {
@@ -91,6 +145,7 @@ public class Hotel {
 				"\nEstado - " + this.dadosHotel.getEndereco().getEstado() + 
 				"\nCEP - " + this.dadosHotel.getEndereco().getCep() + 
 				"\nCNPJ - " + this.dadosHotel.getCnpj();
+
 	}
 
 }
