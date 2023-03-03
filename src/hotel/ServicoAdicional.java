@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 public class ServicoAdicional {
+
 	private String nomeServico;
 	private BigDecimal valorServico;
 
@@ -29,7 +30,6 @@ public class ServicoAdicional {
 	public void setValorServico(BigDecimal valorServico) {
 		this.valorServico = valorServico;
 	}
-
 
 	@Override
 	public String toString() {

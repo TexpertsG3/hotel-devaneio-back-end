@@ -1,6 +1,9 @@
 package hotel;
 
 import java.math.BigDecimal;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -19,11 +22,18 @@ public class HotelTeste {
 
 	public static void main(String[] args) {
 		
+		try {
+			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/mysql", "root", "root");//Teste conexão mysql
+			System.out.println("Conectado com sucesso");
+		} catch (SQLException e) {
+			System.out.println("Erro na conexão com o banco de dados");
+		}
+		
 		DateTimeFormatter dataFormatada = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		
 		Scanner sc = new Scanner(System.in);
 		
-		Endereco endereco = new Endereco("Rua Fict�cia", "Jd. Indefinido", "999", "13874-888", "Neverland", "Terra m�dia");
+		Endereco endereco = new Endereco("Rua Fictícia", "Jd. Indefinido", "999", "13874-888", "Neverland", "Terra média");
 		
 		DadosHotel dadosHotel = new DadosHotel("Hotel DEVaneio", endereco , "01.001.002/0001-85", "devaneio@hotel.com", "(99)9999-9999");
 		
@@ -40,11 +50,11 @@ public class HotelTeste {
 		hotel.cadastrarQuarto("Quarto C++", new BigDecimal("199.00"));
 
 
-		hotel.cadastrarServico("Audit�rio de Eventos", new BigDecimal("150.00"));
-		hotel.cadastrarServico("Espa�o Kids", new BigDecimal("230.00"));
+		hotel.cadastrarServico("Auditório de Eventos", new BigDecimal("150.00"));
+		hotel.cadastrarServico("Espaço Kids", new BigDecimal("230.00"));
 		hotel.cadastrarServico("Passeio nas Dunas", new BigDecimal("180.00"));
 		hotel.cadastrarServico("Tratamento de Spa", new BigDecimal("300.00"));
-		hotel.cadastrarServico("Guia Tur�stico", new BigDecimal("100.00"));
+		hotel.cadastrarServico("Guia Turístico", new BigDecimal("100.00"));
 
 
 		int contador;
@@ -59,11 +69,11 @@ public class HotelTeste {
 
 		do {
 
-			System.out.println("Escolha uma op��o:\n");
+			System.out.println("Escolha uma opção:\n");
 			System.out.println("1 - Cadastro de novo cliente");
 			System.out.println("2 - Cadastro de nova reserva");
-			System.out.println("3 - Consultar alojamentos dispon�veis");
-			System.out.println("4 - Consultar servi�os adicionais");
+			System.out.println("3 - Consultar alojamentos disponíveis");
+			System.out.println("4 - Consultar serviços adicionais");
 			System.out.println("5 - Acesso Administrativo\n");
 			System.out.println("0 - Sair do sistema");
 
@@ -82,7 +92,7 @@ public class HotelTeste {
 					nomeHospede = sc.nextLine();
 
 				} catch (Exception e) {
-					throw new DadosInvalidosException("Nome inv�lido.");
+					throw new DadosInvalidosException("Nome inválido.");
 				}
 				
 				System.out.print("Sobrenome: ");
@@ -91,7 +101,7 @@ public class HotelTeste {
 					sobrenomeHospede = sc.nextLine();
 
 				} catch (Exception e) {
-					throw new DadosInvalidosException("Sobrenome inv�lido.");
+					throw new DadosInvalidosException("Sobrenome inválido.");
 				}
 				
 				System.out.print("CPF: ");
@@ -100,7 +110,7 @@ public class HotelTeste {
 					cpfHospede = sc.nextLine();
 
 				} catch (Exception e) {
-					throw new DadosInvalidosException("CPF inv�lido.");
+					throw new DadosInvalidosException("CPF inválido.");
 				}
 
 				System.out.print("Email: ");
@@ -109,7 +119,7 @@ public class HotelTeste {
 					emailHospede = sc.nextLine();
 
 				} catch (Exception e) {
-					throw new DadosInvalidosException("Email inv�lido.");
+					throw new DadosInvalidosException("Email inválido.");
 				}
 
 				System.out.print("Senha: ");
@@ -118,7 +128,7 @@ public class HotelTeste {
 					senhaHospede = sc.nextLine();
 
 				} catch (Exception e) {
-					throw new DadosInvalidosException("Senha inv�lida.");
+					throw new DadosInvalidosException("Senha inválida.");
 				}
 
 				hospede = new Hospede(nomeHospede, sobrenomeHospede, cpfHospede, emailHospede, senhaHospede);
@@ -134,10 +144,10 @@ public class HotelTeste {
 
 			case 2:
 				if(hospede == null) {
-					throw new UsuarioNaoCadastradoException("N�o existe um usu�rio cadastrado para realizar a reserva.");
+					throw new UsuarioNaoCadastradoException("Não existe um usuário cadastrado para realizar a reserva.");
 				}
 				
-				System.out.println("\nTemos os seguintes alojamentos dispon�veis: \n");
+				System.out.println("\nTemos os seguintes alojamentos disponíveis: \n");
 
 				contador = 0;
 				for (Alojamento alojamento : hotel.getListaDeAlojamentos()) {
@@ -176,7 +186,7 @@ public class HotelTeste {
 						throw new DataInvalidaException("A data de checkin deve ser superior ou igual a data atual.");
 					}
 				} catch (DateTimeParseException e) {
-					throw new DataInvalidaException("Formato de data inv�lido.");
+					throw new DataInvalidaException("Formato de data inválido.");
 				}
 
 				LocalDate checkOut;
@@ -186,21 +196,21 @@ public class HotelTeste {
 					checkOut = LocalDate.parse(dataCheckout, dataFormatada);
 					if (checkOut.isBefore(checkIn) || checkOut.isEqual(checkIn)) {
 						throw new DataInvalidaException(
-								"Data Inv�lida. A data de checkout deve ser superior a data de checkin.");
+								"Data inválida. A data de checkout deve ser superior a data de checkin.");
 					}
 				} catch (DateTimeParseException e) {
-					throw new DataInvalidaException("Formato de data inv�lido.");
+					throw new DataInvalidaException("Formato de data inválido.");
 				}
 
 				System.out.print("Quantidade de adultos: ");
 				Integer quantidaDeAdultos = sc.nextInt();
 				sc.nextLine();
 
-				System.out.print("Quantidade de crian�as: ");
+				System.out.print("Quantidade de crianças: ");
 				Integer quantidaDeCriancas = sc.nextInt();
 				sc.nextLine();
 
-				System.out.println("\nTemos os seguintes servi�os adicionais dispon�veis: \n");
+				System.out.println("\nTemos os seguintes serviços adicionais disponíveis: \n");
 				
 				contador = 0;
 				for (ServicoAdicional servico : hotel.getListaDeServicos()) {
@@ -211,7 +221,7 @@ public class HotelTeste {
 				}
 					
 				Set<ServicoAdicional> servicosSelecionados = new HashSet<>();
-				System.out.println("Selecione os servi�os adicionais (Ex. 1 3 5 ou (0 para nenhum ou para sair da sele��o)): \n");
+				System.out.println("Selecione os serviços adicionais (Ex. 1 3 5 ou (0 para nenhum ou para sair da seleção)): \n");
 				Integer valor;
 
 				do {
@@ -238,23 +248,23 @@ public class HotelTeste {
 						break;
 					default:
 						throw new ServicoInexistenteException(
-								"Servi�o n�o existente no cat�logo. Favor selecionar um dos servi�os dispon�veis");
+								"Serviço não existente no catálogo. Favor selecionar um dos serviços disponíveis");
 
 					}
 
 				} while (!valor.equals(0));
 
-				Reserva reserva = new Reserva(alojamentoEscolhido, checkIn, checkOut, hospede, quantidaDeAdultos,
-							quantidaDeCriancas, servicosSelecionados);
-				hotel.setReserva(reserva);
-				
-				System.out.println();
-				System.out.println(hotel.getReserva());
-				System.out.println();
-				System.out.println("Valor dos servi�os: R$" + hotel.calculaValorServico(servicosSelecionados));
-				System.out.println("Valor da di�ria: R$" + hotel.calculaValorDiaria(reserva));
-				System.out.println();
-				System.out.printf("\nValor total dos servi�os e di�rias: R$%.2f\n", hotel.calculaTotalReserva(servicosSelecionados, reserva));
+//				Reserva reserva = new Reserva(alojamentoEscolhido, checkIn, checkOut, hospede, quantidaDeAdultos,
+//							quantidaDeCriancas, servicosSelecionados);
+//				hotel.setReserva(reserva);
+//				
+//				System.out.println();
+//				System.out.println(hotel.getReserva());
+//				System.out.println();
+//				System.out.println("Valor dos serviços: R$" + hotel.calculaValorServico(servicosSelecionados));
+//				System.out.println("Valor da diária: R$" + hotel.calculaValorDiaria(reserva));
+//				System.out.println();
+//				System.out.printf("\nValor total dos serviços e diárias: R$%.2f\n", hotel.calculaTotalReserva(servicosSelecionados, reserva));
 
 				try {
 					Thread.sleep(3000);
@@ -264,7 +274,7 @@ public class HotelTeste {
 				break;
 
 			case 3:
-				System.out.println("\nTemos os seguintes alojamentos dispon�veis: \n");
+				System.out.println("\nTemos os seguintes alojamentos disponíveis: \n");
 
 				contador = 0;
 				for (Alojamento alojamento : hotel.getListaDeAlojamentos()) {
@@ -282,7 +292,7 @@ public class HotelTeste {
 				break;
 
 			case 4:
-				System.out.println("\nTemos os seguintes servi�os adicionais dispon�veis: \n");
+				System.out.println("\nTemos os seguintes serviços adicionais disponíveis: \n");
 
 				contador = 0;
 				for (ServicoAdicional servico : hotel.getListaDeServicos()) {
@@ -326,11 +336,11 @@ public class HotelTeste {
 				Integer menuAdm;
 				do {
 					
-					System.out.printf("\n\n%s, seja bem vindo ao sistema administrativo. Escolha uma op��o: \n\n", admin.getNome());
-					System.out.println("1 - Cadastro de funcion�rios");
-					System.out.println("2 - Consulta de funcion�rios");
+					System.out.printf("\n\n%s, seja bem vindo ao sistema administrativo. Escolha uma opção: \n\n", admin.getNome());
+					System.out.println("1 - Cadastro de funcionários");
+					System.out.println("2 - Consulta de funcionários");
 					System.out.println("3 - Sistema para cadastro de novos administradores");
-					System.out.println("4 - Sistema para quita��o de reservas");
+					System.out.println("4 - Sistema para quitação de reservas");
 					System.out.println("0 - Sair do sistema administrativo");
 					
 					menuAdm = sc.nextInt();
@@ -338,23 +348,23 @@ public class HotelTeste {
 					
 					switch (menuAdm) {						
 					case 1: 
-						System.out.print("\nDigite o nome do funcion�rio: ");
+						System.out.print("\nDigite o nome do funcionário: ");
 						String nomeFuncionario = sc.nextLine();
-						System.out.print("\nDigite o sobrenome do funcion�rio: ");
+						System.out.print("\nDigite o sobrenome do funcionário: ");
 						String sobrenomeFuncionario = sc.nextLine();
-						System.out.print("\nDigite o cargo do funcion�rio: ");
+						System.out.print("\nDigite o cargo do funcionário: ");
 						String cargoDoFuncionario = sc.nextLine();
-						System.out.print("\nDigite o sal�rio do funcion�rio: ");
+						System.out.print("\nDigite o salário do funcionário: ");
 						String salarioDoFuncionario = sc.nextLine();
 						
 						Funcionario funcionario = new Funcionario(nomeFuncionario, sobrenomeFuncionario, new Cargo(cargoDoFuncionario), new BigDecimal(salarioDoFuncionario));
-						System.out.printf("\nO funcion�rio %s foi cadastrado com sucesso!\n", funcionario.getNome());
+						System.out.printf("\nO funcionário %s foi cadastrado com sucesso!\n", funcionario.getNome());
 						System.out.println(funcionario);
 						hotel.getListaDeFuncionarios().add(funcionario);
 						
 						break;
 					case 2: 
-						System.out.printf("\nFuncion�rios do hotel %s:\n", hotel.getDadosHotel().getNome());
+						System.out.printf("\nFuncionários do hotel %s:\n", hotel.getDadosHotel().getNome());
 						for (Funcionario funcionarioCadastrado : hotel.getListaDeFuncionarios()) {
 							System.out.println(funcionarioCadastrado);
 							}

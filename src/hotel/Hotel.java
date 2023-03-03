@@ -12,27 +12,25 @@ public class Hotel {
 	private List<Alojamento> listaDeAlojamentos = new ArrayList<>();
 	private List<ServicoAdicional> listaDeServicos = new ArrayList<>();
 	private Set<Funcionario> listaDeFuncionarios = new HashSet<>();
-	private Reserva reserva;
+	private List<Reserva> listaDeReservas = new ArrayList<>();
 
 	public Hotel() {
 
 	}
-	
+
 	public Hotel(DadosHotel dadosHotel) {
 		this.dadosHotel = dadosHotel;
 	}
 
 	public Hotel(DadosHotel dadosHotel, List<Alojamento> listaDeAlojamentos, List<ServicoAdicional> listaDeServicos,
-			Set<Funcionario> listaDeFuncionarios, Reserva reserva) {
+			Set<Funcionario> listaDeFuncionarios, List<Reserva> listaDeReservas) {
 
 		this.dadosHotel = dadosHotel;
 		this.listaDeAlojamentos = listaDeAlojamentos;
 		this.listaDeServicos = listaDeServicos;
 		this.listaDeFuncionarios = listaDeFuncionarios;
-		this.reserva = reserva;
+		this.listaDeReservas = listaDeReservas;
 	}
-
-	
 
 	public DadosHotel getDadosHotel() {
 		return dadosHotel;
@@ -66,24 +64,24 @@ public class Hotel {
 		this.listaDeFuncionarios = listaDeFuncionarios;
 	}
 
-	public Reserva getReserva() {
-		return reserva;
+	public List<Reserva> getListaDeReservas() {
+		return listaDeReservas;
 	}
 
-	public void setReserva(Reserva reserva) {
-		this.reserva = reserva;
+	public void setListaDeReservas(List<Reserva> listaDeReservas) {
+		this.listaDeReservas = listaDeReservas;
 	}
 
 	public BigDecimal calculaValorDiaria(Reserva reserva) {
 		BigDecimal totalDiaria = BigDecimal.ZERO;
 
 		if (reserva.getQuantidadeAdultos() > 2) {
-			BigDecimal temp = new BigDecimal(reserva.getQuantidadeAdultos()-2).multiply(BigDecimal.valueOf(10.00));
+			BigDecimal temp = new BigDecimal(reserva.getQuantidadeAdultos() - 2).multiply(BigDecimal.valueOf(10.00));
 			totalDiaria = totalDiaria.add(temp);
 		}
 
 		if (reserva.getQuantidadeCriancas() > 2) {
-			BigDecimal temp = new BigDecimal(reserva.getQuantidadeCriancas()-2).multiply(BigDecimal.valueOf(5.00));
+			BigDecimal temp = new BigDecimal(reserva.getQuantidadeCriancas() - 2).multiply(BigDecimal.valueOf(5.00));
 			totalDiaria = totalDiaria.add(temp);
 		}
 
@@ -104,11 +102,11 @@ public class Hotel {
 
 		return total;
 	}
-	
+
 	public void cadastrarQuarto(String quarto, BigDecimal preco) {
 		this.listaDeAlojamentos.add(new Alojamento(quarto, preco));
 	}
-	
+
 	public void cadastrarServicoAdicional(ServicoAdicional servico) {
 		this.listaDeServicos.add(servico);
 	}
@@ -134,17 +132,13 @@ public class Hotel {
 		this.listaDeServicos.add(new ServicoAdicional(servico, valorServico));
 	}
 
-
-
 	@Override
 	public String toString() {
 
-		return "Hotel - " + this.dadosHotel.getNome() + "\n" + "Rua - " + this.dadosHotel.getEndereco().getRua() +
-				"\nBairro - " + this.dadosHotel.getEndereco().getBairro() + 
-				"\nCidade - " + this.dadosHotel.getEndereco().getCidade() + 
-				"\nEstado - " + this.dadosHotel.getEndereco().getEstado() + 
-				"\nCEP - " + this.dadosHotel.getEndereco().getCep() + 
-				"\nCNPJ - " + this.dadosHotel.getCnpj();
+		return "Hotel - " + this.dadosHotel.getNome() + "\n" + "Rua - " + this.dadosHotel.getEndereco().getRua()
+				+ "\nBairro - " + this.dadosHotel.getEndereco().getBairro() + "\nCidade - "
+				+ this.dadosHotel.getEndereco().getCidade() + "\nEstado - " + this.dadosHotel.getEndereco().getEstado()
+				+ "\nCEP - " + this.dadosHotel.getEndereco().getCep() + "\nCNPJ - " + this.dadosHotel.getCnpj();
 
 	}
 

@@ -7,7 +7,6 @@ public class Admin {
 	private String senha;
 	
 	public Admin(String nome, String email, String senha) {
-		super();
 		this.nome = nome;
 		this.email = email;
 		this.senha = senha;
