@@ -7,7 +7,8 @@ import java.util.Set;
 
 public class Reserva {
 
-	private Hotel hotel;
+	private Integer idReserva;
+	private Integer idHotel;
 	private Alojamento quarto;
 	private LocalDate checkIn;
 	private LocalDate checkOut;
@@ -16,9 +17,9 @@ public class Reserva {
 	private Integer quantidadeCriancas;
 	private Set<ServicoAdicional> servicoAdicional = new HashSet<>();
 
-	public Reserva(Hotel hotel, Alojamento quarto, LocalDate checkIn, LocalDate checkOut, Hospede usuario,
+	public Reserva(Integer idHotel, Alojamento quarto, LocalDate checkIn, LocalDate checkOut, Hospede usuario,
 			Integer quantidadeAdultos, Integer quantidadeCriancas, Set<ServicoAdicional> servicoAdicional) {
-		this.hotel = hotel;
+		this.idHotel = idHotel;
 		this.quarto = quarto;
 		this.checkIn = checkIn;
 		this.checkOut = checkOut;
@@ -28,12 +29,20 @@ public class Reserva {
 		this.servicoAdicional = servicoAdicional;
 	}
 
-	public Hotel getHotel() {
-		return hotel;
+	public Integer getIdReserva() {
+		return idReserva;
 	}
 
-	public void setHotel(Hotel hotel) {
-		this.hotel = hotel;
+	public void setIdReserva(Integer idReserva) {
+		this.idReserva = idReserva;
+	}
+
+	public Integer getIdHotel() {
+		return idHotel;
+	}
+
+	public void setIdHotel(Integer idHotel) {
+		this.idHotel = idHotel;
 	}
 
 	public Alojamento getQuarto() {
@@ -98,13 +107,12 @@ public class Reserva {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Reserva efetuada com sucesso para o cliente: " + usuario.getNome());
 		sb.append("\n\nDados da reserva:");
-		sb.append("\nHotel: " + hotel.getDadosHotel().getNome());
 		sb.append("\nQuarto: " + quarto.getNomeAlojamento());
 		sb.append("\nData do CheckIn: " + checkIn.format(dataFormatada));
 		sb.append("\nData do Checkout: " + checkOut.format(dataFormatada));
 		sb.append("\nQuantidade de adultos: " + quantidadeAdultos);
-		sb.append("\nQuantidade de crianças: " + quantidadeCriancas);
-		sb.append("\nServiços adicionais selecionados:\n");
+		sb.append("\nQuantidade de crianÃ§as: " + quantidadeCriancas);
+		sb.append("\nServiÃ§os adicionais selecionados:\n");
 		for (ServicoAdicional servico : servicoAdicional) {
 			sb.append(servico.getNomeServico()).append(" - ");
 		}

@@ -102,9 +102,6 @@ public class Hotel {
 		return total;
 	}
 
-	public void cadastrarQuarto(String quarto, BigDecimal preco) {
-		this.listaDeAlojamentos.add(new Alojamento(quarto, preco));
-	}
 
 	public static BigDecimal somaServicos(List<ServicoAdicional> servicos) {
 		BigDecimal resultado = BigDecimal.ZERO;

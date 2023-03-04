@@ -2,6 +2,7 @@ package hotel;
 
 public class Endereco {
 
+	private Integer idEndereco;
 	private String rua;
 	private String bairro;
 	private String numero;
@@ -10,13 +11,20 @@ public class Endereco {
 	private String estado;
 
 	public Endereco(String rua, String bairro, String numero, String cep, String cidade, String estado) {
-		super();
 		this.rua = rua;
 		this.bairro = bairro;
 		this.numero = numero;
 		this.cep = cep;
 		this.cidade = cidade;
 		this.estado = estado;
+	}
+	
+	public Integer getIdEndereco() {
+		return idEndereco;
+	}
+	
+	public void setIdEndereco(Integer idEndereco) {
+		this.idEndereco = idEndereco;
 	}
 
 	public String getRua() {

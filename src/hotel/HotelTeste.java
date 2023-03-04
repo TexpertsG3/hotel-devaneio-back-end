@@ -25,11 +25,11 @@ public class HotelTeste {
 	
 		ServicoAdicionalDAO servicoadd = new ServicoAdicionalDAO();
 		
-//			try {
-//				servicoadd.insere("Auditório de eventos", new BigDecimal("150.0"));
-//			} catch (SQLException e1) {
-//				e1.printStackTrace();
-//			}
+			try {
+				servicoadd.insere("Auditório de eventos", new BigDecimal("150.0"), 1);
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 		
 		
 		
@@ -48,11 +48,11 @@ public class HotelTeste {
 		System.out.println(hotel);
 		System.out.println("\n");
 
-		Admin admin = new Admin("ADMIN", "admin@admin.com", "admin");
-		
-		hotel.cadastrarQuarto("Quarto Java", new BigDecimal("399.00"));
-		hotel.cadastrarQuarto("Quarto C#", new BigDecimal("299.00"));
-		hotel.cadastrarQuarto("Quarto C++", new BigDecimal("199.00"));
+//		Admin admin = new Admin("ADMIN", "admin@admin.com", "admin");
+//		
+//		hotel.cadastrarQuarto("Quarto Java", new BigDecimal("399.00"));
+//		hotel.cadastrarQuarto("Quarto C#", new BigDecimal("299.00"));
+//		hotel.cadastrarQuarto("Quarto C++", new BigDecimal("199.00"));
 
 
 //		hotel.cadastrarServico("Auditório de Eventos", new BigDecimal("150.00"));
@@ -138,9 +138,9 @@ public class HotelTeste {
 					throw new DadosInvalidosException("Senha inválida.");
 				}
 
-				hospede = new Hospede(nomeHospede, sobrenomeHospede, cpfHospede, emailHospede, senhaHospede);
-
-				System.out.printf("\nCliente %s, cadastrado com sucesso. \n\n\n", hospede.getNome());
+//				hospede = new Hospede(nomeHospede, sobrenomeHospede, cpfHospede, emailHospede, senhaHospede);
+//
+//				System.out.printf("\nCliente %s, cadastrado com sucesso. \n\n\n", hospede.getNome());
 
 				try {
 					Thread.sleep(3000);
@@ -318,32 +318,32 @@ public class HotelTeste {
 
 			case 5:
 				
-				System.out.println("\nLogin administrativo:");
-				System.out.print("Email: ");
-				
-				String admEmail;
-				try {
-					admEmail = sc.nextLine();
-					if (!admEmail.equals(admin.getEmail()))
-						throw new UsuarioSemAcessoAdministrativoException("Email incorreto.");
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				
-				System.out.print("Senha: ");
-				String admSenha;
-				try {
-					admSenha = sc.nextLine();
-					if (!admSenha.equals(admin.getSenha()))
-						throw new UsuarioSemAcessoAdministrativoException("Senha incorreta.");
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+//				System.out.println("\nLogin administrativo:");
+//				System.out.print("Email: ");
+//				
+//				String admEmail;
+//				try {
+//					admEmail = sc.nextLine();
+//					if (!admEmail.equals(admin.getEmail()))
+//						throw new UsuarioSemAcessoAdministrativoException("Email incorreto.");
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//				
+//				System.out.print("Senha: ");
+//				String admSenha;
+//				try {
+//					admSenha = sc.nextLine();
+//					if (!admSenha.equals(admin.getSenha()))
+//						throw new UsuarioSemAcessoAdministrativoException("Senha incorreta.");
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
 				
 				Integer menuAdm;
 				do {
 					
-					System.out.printf("\n\n%s, seja bem vindo ao sistema administrativo. Escolha uma opção: \n\n", admin.getNome());
+//					System.out.printf("\n\n%s, seja bem vindo ao sistema administrativo. Escolha uma opção: \n\n", admin.getNome());
 					System.out.println("1 - Cadastro de funcionários");
 					System.out.println("2 - Consulta de funcionários");
 					System.out.println("3 - Sistema para cadastro de novos administradores");
@@ -364,10 +364,10 @@ public class HotelTeste {
 						System.out.print("\nDigite o salário do funcionário: ");
 						String salarioDoFuncionario = sc.nextLine();
 						
-						Funcionario funcionario = new Funcionario(nomeFuncionario, sobrenomeFuncionario, new Cargo(cargoDoFuncionario), new BigDecimal(salarioDoFuncionario));
-						System.out.printf("\nO funcionário %s foi cadastrado com sucesso!\n", funcionario.getNome());
-						System.out.println(funcionario);
-						hotel.getListaDeFuncionarios().add(funcionario);
+//						Funcionario funcionario = new Funcionario(nomeFuncionario, sobrenomeFuncionario, new Cargo(cargoDoFuncionario), new BigDecimal(salarioDoFuncionario));
+//						System.out.printf("\nO funcionário %s foi cadastrado com sucesso!\n", funcionario.getNome());
+//						System.out.println(funcionario);
+//						hotel.getListaDeFuncionarios().add(funcionario);
 						
 						break;
 					case 2: 

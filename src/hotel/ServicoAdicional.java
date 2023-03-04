@@ -1,19 +1,26 @@
 package hotel;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
 public class ServicoAdicional {
 
 	private Integer idServico;
 	private String nomeServico;
 	private BigDecimal valorServico;
+	private Integer idHotel;
 
-	public ServicoAdicional(String nomeServico, BigDecimal valorServico) {
+	public ServicoAdicional(String nomeServico, BigDecimal valorServico, Integer idHotel) {
+		this.idHotel = idHotel;
 		this.nomeServico = nomeServico;
 		this.valorServico = valorServico;
+	}
+
+	public Integer getIdHotel() {
+		return idHotel;
+	}
+
+	public void setIdHotel(Integer hotel) {
+		this.idHotel = hotel;
 	}
 
 	public Integer getIdServico() {

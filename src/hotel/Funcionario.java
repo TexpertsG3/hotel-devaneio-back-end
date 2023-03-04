@@ -2,24 +2,34 @@ package hotel;
 
 import java.math.BigDecimal;
 import java.util.Objects;
-import java.util.Set;
 
 import exception.SalarioInvalidoException;
 
 public class Funcionario {
-	
-	private static final String MSG_SALARIO_INVALIDO = "O valor digitado È inv·lido. Deve ser maior que 0";
-	
+
+	private static final String MSG_SALARIO_INVALIDO = "O valor digitado √© inv√°lido. Deve ser maior que 0";
+
+	private Integer idFuncionario;
 	private String nome;
 	private String sobrenome;
 	private Cargo cargo;
 	private BigDecimal salario;
-	
-	public Funcionario(String nome, String sobrenome, Cargo cargo, BigDecimal salario) {
+	private Integer idHotel;
+
+	public Funcionario(String nome, String sobrenome, Cargo cargo, BigDecimal salario, Integer idHotel) {
+		this.idHotel = idHotel;
 		this.nome = nome;
 		this.sobrenome = sobrenome;
 		this.cargo = cargo;
 		this.salario = salario;
+	}
+
+	public Integer getIdFuncionario() {
+		return idFuncionario;
+	}
+
+	public void setIdFuncionario(Integer idFuncionario) {
+		this.idFuncionario = idFuncionario;
 	}
 
 	public String getNome() {
@@ -50,14 +60,22 @@ public class Funcionario {
 		return salario;
 	}
 
-	public void modificarSalarioFuncionario (BigDecimal novoSalario) {
-		if(novoSalario.compareTo(BigDecimal.ZERO) > 0) {
+	public Integer getIdHotel() {
+		return idHotel;
+	}
+
+	public void setIdHotel(Integer idHotel) {
+		this.idHotel = idHotel;
+	}
+
+	public void modificarSalarioFuncionario(BigDecimal novoSalario) {
+		if (novoSalario.compareTo(BigDecimal.ZERO) > 0) {
 			this.salario = novoSalario;
 		} else {
 			throw new SalarioInvalidoException(MSG_SALARIO_INVALIDO);
 		}
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(nome, sobrenome);
@@ -77,10 +95,8 @@ public class Funcionario {
 
 	@Override
 	public String toString() {
-		return "\nNome: " + this.nome
-				+ "\nSobrenome: " + this.sobrenome
-				+ "\nCargo: " + this.cargo
-				+ "\nSal·rio: R$" + this.salario;
+		return "\nNome: " + this.nome + "\nSobrenome: " + this.sobrenome + "\nCargo: " + this.cargo + "\nSal√°rio: R$"
+				+ this.salario;
 	}
-	
+
 }

@@ -1,7 +1,8 @@
 package hotel;
 
 public class DadosHotel {
-
+	
+	private Integer idDadosHotel;
 	private String nome;
 	private Endereco endereco;
 	private String cnpj;
@@ -9,12 +10,19 @@ public class DadosHotel {
 	private String telefone;
 
 	public DadosHotel(String nome, Endereco endereco, String cnpj, String email, String telefone) {
-		super();
 		this.nome = nome;
 		this.endereco = endereco;
 		this.cnpj = cnpj;
 		this.email = email;
 		this.telefone = telefone;
+	}
+	
+	public Integer getIdDadosHotel() {
+		return idDadosHotel;
+	}
+	
+	public void setIdDadosHotel(Integer idDadosHotel) {
+		this.idDadosHotel = idDadosHotel;
 	}
 
 	public String getNome() {

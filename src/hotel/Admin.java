@@ -1,15 +1,26 @@
 package hotel;
 
 public class Admin {
-	
+
+	private Integer idAdmin;
 	private String nome;
 	private String email;
 	private String senha;
-	
-	public Admin(String nome, String email, String senha) {
+	private Integer idHotel;
+
+	public Admin(String nome, String email, String senha, Integer idHotel) {
 		this.nome = nome;
 		this.email = email;
 		this.senha = senha;
+		this.idHotel = idHotel;
+	}
+
+	public Integer getIdAdmin() {
+		return idAdmin;
+	}
+
+	public void setIdAdmin(Integer idAdmin) {
+		this.idAdmin = idAdmin;
 	}
 
 	public String getNome() {
@@ -35,5 +46,13 @@ public class Admin {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
-	
+
+	public Integer getIdHotel() {
+		return idHotel;
+	}
+
+	public void setIdHotel(Integer idHotel) {
+		this.idHotel = idHotel;
+	}
+
 }
