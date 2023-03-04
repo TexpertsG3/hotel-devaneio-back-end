@@ -8,9 +8,9 @@ import java.util.Set;
 
 public class Hotel {
 
+	private Integer idHotel;
 	private DadosHotel dadosHotel;
 	private List<Alojamento> listaDeAlojamentos = new ArrayList<>();
-	private List<ServicoAdicional> listaDeServicos = new ArrayList<>();
 	private Set<Funcionario> listaDeFuncionarios = new HashSet<>();
 	private List<Reserva> listaDeReservas = new ArrayList<>();
 
@@ -27,9 +27,16 @@ public class Hotel {
 
 		this.dadosHotel = dadosHotel;
 		this.listaDeAlojamentos = listaDeAlojamentos;
-		this.listaDeServicos = listaDeServicos;
 		this.listaDeFuncionarios = listaDeFuncionarios;
 		this.listaDeReservas = listaDeReservas;
+	}
+	
+	public Integer getIdHotel() {
+		return idHotel;
+	}
+
+	public void setIdHotel(Integer idHotel) {
+		this.idHotel = idHotel;
 	}
 
 	public DadosHotel getDadosHotel() {
@@ -46,14 +53,6 @@ public class Hotel {
 
 	public void setListaDeAlojamentos(List<Alojamento> listaDeAlojamentos) {
 		this.listaDeAlojamentos = listaDeAlojamentos;
-	}
-
-	public List<ServicoAdicional> getListaDeServicos() {
-		return listaDeServicos;
-	}
-
-	public void setListaDeServicos(List<ServicoAdicional> listaDeServicos) {
-		this.listaDeServicos = listaDeServicos;
 	}
 
 	public Set<Funcionario> getListaDeFuncionarios() {
@@ -107,10 +106,6 @@ public class Hotel {
 		this.listaDeAlojamentos.add(new Alojamento(quarto, preco));
 	}
 
-	public void cadastrarServicoAdicional(ServicoAdicional servico) {
-		this.listaDeServicos.add(servico);
-	}
-
 	public static BigDecimal somaServicos(List<ServicoAdicional> servicos) {
 		BigDecimal resultado = BigDecimal.ZERO;
 		for (ServicoAdicional servico : servicos) {
@@ -126,10 +121,6 @@ public class Hotel {
 			totalServico = totalServico.add(servico.getValorServico());
 		}
 		return totalServico;
-	}
-
-	public void cadastrarServico(String servico, BigDecimal valorServico) {
-		this.listaDeServicos.add(new ServicoAdicional(servico, valorServico));
 	}
 
 	@Override

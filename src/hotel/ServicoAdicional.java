@@ -7,12 +7,21 @@ import java.util.Set;
 
 public class ServicoAdicional {
 
+	private Integer idServico;
 	private String nomeServico;
 	private BigDecimal valorServico;
 
 	public ServicoAdicional(String nomeServico, BigDecimal valorServico) {
 		this.nomeServico = nomeServico;
 		this.valorServico = valorServico;
+	}
+
+	public Integer getIdServico() {
+		return idServico;
+	}
+
+	public void setIdServico(Integer idServico) {
+		this.idServico = idServico;
 	}
 
 	public String getNomeServico() {

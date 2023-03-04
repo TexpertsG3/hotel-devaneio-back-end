@@ -20,14 +20,19 @@ import exception.UsuarioSemAcessoAdministrativoException;
 
 public class HotelTeste {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 		
-		try {
-			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/mysql", "root", "root");//Teste conexão mysql
-			System.out.println("Conectado com sucesso");
-		} catch (SQLException e) {
-			System.out.println("Erro na conexão com o banco de dados");
-		}
+	
+		ServicoAdicionalDAO servicoadd = new ServicoAdicionalDAO();
+		
+//			try {
+//				servicoadd.insere("Auditório de eventos", new BigDecimal("150.0"));
+//			} catch (SQLException e1) {
+//				e1.printStackTrace();
+//			}
+		
+		
+		
 		
 		DateTimeFormatter dataFormatada = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		
@@ -50,11 +55,13 @@ public class HotelTeste {
 		hotel.cadastrarQuarto("Quarto C++", new BigDecimal("199.00"));
 
 
-		hotel.cadastrarServico("Auditório de Eventos", new BigDecimal("150.00"));
-		hotel.cadastrarServico("Espaço Kids", new BigDecimal("230.00"));
-		hotel.cadastrarServico("Passeio nas Dunas", new BigDecimal("180.00"));
-		hotel.cadastrarServico("Tratamento de Spa", new BigDecimal("300.00"));
-		hotel.cadastrarServico("Guia Turístico", new BigDecimal("100.00"));
+//		hotel.cadastrarServico("Auditório de Eventos", new BigDecimal("150.00"));
+//		hotel.cadastrarServico("Espaço Kids", new BigDecimal("230.00"));
+//		hotel.cadastrarServico("Passeio nas Dunas", new BigDecimal("180.00"));
+//		hotel.cadastrarServico("Tratamento de Spa", new BigDecimal("300.00"));
+//		hotel.cadastrarServico("Guia Turístico", new BigDecimal("100.00"));
+		
+		System.out.println(servicoadd.listagem());
 
 
 		int contador;
@@ -210,49 +217,49 @@ public class HotelTeste {
 				Integer quantidaDeCriancas = sc.nextInt();
 				sc.nextLine();
 
-				System.out.println("\nTemos os seguintes serviços adicionais disponíveis: \n");
-				
-				contador = 0;
-				for (ServicoAdicional servico : hotel.getListaDeServicos()) {
-
-					System.out.print(++contador + " - ");
-					System.out.println(servico);
-					System.out.println();
-				}
+//				System.out.println("\nTemos os seguintes serviços adicionais disponíveis: \n");
+//				
+//				contador = 0;
+//				for (ServicoAdicional servico : hotel.getListaDeServicos()) {
+//
+//					System.out.print(++contador + " - ");
+//					System.out.println(servico);
+//					System.out.println();
+//				}
 					
-				Set<ServicoAdicional> servicosSelecionados = new HashSet<>();
-				System.out.println("Selecione os serviços adicionais (Ex. 1 3 5 ou (0 para nenhum ou para sair da seleção)): \n");
-				Integer valor;
-
-				do {
-
-					valor = sc.nextInt();
-
-					switch (valor) {
-					case 0:
-						break;
-					case 1:
-						servicosSelecionados.add(hotel.getListaDeServicos().get(0));
-						break;
-					case 2:
-						servicosSelecionados.add(hotel.getListaDeServicos().get(1));
-						break;
-					case 3:
-						servicosSelecionados.add(hotel.getListaDeServicos().get(2));
-						break;
-					case 4:
-						servicosSelecionados.add(hotel.getListaDeServicos().get(3));
-						break;
-					case 5:
-						servicosSelecionados.add(hotel.getListaDeServicos().get(4));
-						break;
-					default:
-						throw new ServicoInexistenteException(
-								"Serviço não existente no catálogo. Favor selecionar um dos serviços disponíveis");
-
-					}
-
-				} while (!valor.equals(0));
+//				Set<ServicoAdicional> servicosSelecionados = new HashSet<>();
+//				System.out.println("Selecione os serviços adicionais (Ex. 1 3 5 ou (0 para nenhum ou para sair da seleção)): \n");
+//				Integer valor;
+//
+//				do {
+//
+//					valor = sc.nextInt();
+//
+//					switch (valor) {
+//					case 0:
+//						break;
+//					case 1:
+//						servicosSelecionados.add(hotel.getListaDeServicos().get(0));
+//						break;
+//					case 2:
+//						servicosSelecionados.add(hotel.getListaDeServicos().get(1));
+//						break;
+//					case 3:
+//						servicosSelecionados.add(hotel.getListaDeServicos().get(2));
+//						break;
+//					case 4:
+//						servicosSelecionados.add(hotel.getListaDeServicos().get(3));
+//						break;
+//					case 5:
+//						servicosSelecionados.add(hotel.getListaDeServicos().get(4));
+//						break;
+//					default:
+//						throw new ServicoInexistenteException(
+//								"Serviço não existente no catálogo. Favor selecionar um dos serviços disponíveis");
+//
+//					}
+//
+//				} while (!valor.equals(0));
 
 //				Reserva reserva = new Reserva(alojamentoEscolhido, checkIn, checkOut, hospede, quantidaDeAdultos,
 //							quantidaDeCriancas, servicosSelecionados);
@@ -292,21 +299,21 @@ public class HotelTeste {
 				break;
 
 			case 4:
-				System.out.println("\nTemos os seguintes serviços adicionais disponíveis: \n");
-
-				contador = 0;
-				for (ServicoAdicional servico : hotel.getListaDeServicos()) {
-
-					System.out.print(++contador + " - ");
-					System.out.println(servico);
-					System.out.println();
-				}
-
-				try {
-					Thread.sleep(3000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+//				System.out.println("\nTemos os seguintes serviços adicionais disponíveis: \n");
+//
+//				contador = 0;
+//				for (ServicoAdicional servico : hotel.getListaDeServicos()) {
+//
+//					System.out.print(++contador + " - ");
+//					System.out.println(servico);
+//					System.out.println();
+//				}
+//
+//				try {
+//					Thread.sleep(3000);
+//				} catch (InterruptedException e) {
+//					e.printStackTrace();
+//				}
 				break;
 
 			case 5:

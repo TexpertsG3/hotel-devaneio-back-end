@@ -1,199 +1,402 @@
-create table cargo
-(
-    id_cargo        int auto_increment
-        primary key,
-    nome_cargo      varchar(100) not null,
-    descricao_cargo varchar(255) not null
-);
+CREATE DATABASE  IF NOT EXISTS `hotel_devaneio` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `hotel_devaneio`;
+-- MySQL dump 10.13  Distrib 8.0.32, for Win64 (x86_64)
+--
+-- Host: localhost    Database: hotel_devaneio
+-- ------------------------------------------------------
+-- Server version	8.0.32
 
-create table endereco
-(
-    id_endereco int auto_increment
-        primary key,
-    rua         varchar(100) not null,
-    bairro      varchar(100) not null,
-    numero      int          not null,
-    cep         int          not null,
-    cidade      varchar(100) not null,
-    uf          varchar(2)   not null,
-    complemento varchar(100) not null
-);
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-create table hospede
-(
-    id_hospede int unsigned not null
-        primary key,
-    nome       varchar(100) not null,
-    sobrenome  varchar(100) not null,
-    cpf        int          not null,
-    senha      varchar(25)  not null,
-    constraint cpf_UNIQUE
-        unique (cpf)
-);
+--
+-- Table structure for table `administrador`
+--
 
-create table contato
-(
-    id_contato         int auto_increment
-        primary key,
-    email              varchar(255) not null,
-    telefone           varchar(45)  not null,
-    celular            varchar(45)  not null,
-    hospede_id_hospede int unsigned not null,
-    constraint fk_contato_hospede
-        foreign key (hospede_id_hospede) references hospede (id_hospede)
-);
+DROP TABLE IF EXISTS `administrador`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `administrador` (
+  `id_administrador` int NOT NULL AUTO_INCREMENT,
+  `nome_admin` varchar(100) NOT NULL,
+  `senha_admin` varchar(100) NOT NULL,
+  `id_contato` int NOT NULL,
+  `id_endereco` int NOT NULL,
+  PRIMARY KEY (`id_administrador`),
+  KEY `fk_administrador_contato_idx` (`id_contato`),
+  KEY `fk_administrador_endereco_idx` (`id_endereco`),
+  CONSTRAINT `fk_administrador_contato` FOREIGN KEY (`id_contato`) REFERENCES `contato` (`id_contato`),
+  CONSTRAINT `fk_administrador_endereco` FOREIGN KEY (`id_endereco`) REFERENCES `endereco` (`id_endereco`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-create table administrador
-(
-    id_administrador int auto_increment
-        primary key,
-    nome_admin       varchar(100) not null,
-    senha_admin      varchar(100) not null,
-    id_contato       int          not null,
-    id_endereco      int          not null,
-    constraint fk_administrador_contato
-        foreign key (id_contato) references contato (id_contato),
-    constraint fk_administrador_endereco
-        foreign key (id_endereco) references endereco (id_endereco)
-);
+--
+-- Dumping data for table `administrador`
+--
 
-create index fk_administrador_contato_idx
-    on administrador (id_contato);
+LOCK TABLES `administrador` WRITE;
+/*!40000 ALTER TABLE `administrador` DISABLE KEYS */;
+/*!40000 ALTER TABLE `administrador` ENABLE KEYS */;
+UNLOCK TABLES;
 
-create index fk_administrador_endereco_idx
-    on administrador (id_endereco);
+--
+-- Table structure for table `cargo`
+--
 
-create index fk_contato_hospede_idx
-    on contato (hospede_id_hospede);
+DROP TABLE IF EXISTS `cargo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `cargo` (
+  `id_cargo` int NOT NULL AUTO_INCREMENT,
+  `nome_cargo` varchar(100) NOT NULL,
+  `descricao_cargo` varchar(255) NOT NULL,
+  PRIMARY KEY (`id_cargo`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-create table dados_hotel
-(
-    id_dados_hotel int auto_increment
-        primary key,
-    nome           varchar(255) not null,
-    cnpj           int          not null,
-    id_contato     int          not null,
-    id_endereco    int          not null,
-    constraint cnpj_UNIQUE
-        unique (cnpj),
-    constraint fk_dados_hotel_contato
-        foreign key (id_contato) references contato (id_contato),
-    constraint fk_dados_hotel_endereco
-        foreign key (id_endereco) references endereco (id_endereco)
-);
+--
+-- Dumping data for table `cargo`
+--
 
-create index fk_dados_hotel_contato_idx
-    on dados_hotel (id_contato);
+LOCK TABLES `cargo` WRITE;
+/*!40000 ALTER TABLE `cargo` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cargo` ENABLE KEYS */;
+UNLOCK TABLES;
 
-create index fk_dados_hotel_endereco_idx
-    on dados_hotel (id_endereco);
+--
+-- Table structure for table `contato`
+--
 
-create table funcionario
-(
-    id_funcionario        int auto_increment
-        primary key,
-    nome_funcionario      varchar(100) not null,
-    sobrenome_funcionario varchar(100) not null,
-    cpf                   int unsigned not null,
-    id_cargo              int          not null,
-    id_contato            int          not null,
-    id_endereco           int          not null,
-    constraint cpf_UNIQUE
-        unique (cpf),
-    constraint fk_funcionario_cargo
-        foreign key (id_cargo) references cargo (id_cargo),
-    constraint fk_funcionario_contato
-        foreign key (id_contato) references contato (id_contato),
-    constraint fk_funcionario_endereco
-        foreign key (id_endereco) references endereco (id_endereco)
-);
+DROP TABLE IF EXISTS `contato`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `contato` (
+  `id_contato` int NOT NULL AUTO_INCREMENT,
+  `email` varchar(255) NOT NULL,
+  `telefone` varchar(45) NOT NULL,
+  `celular` varchar(45) NOT NULL,
+  PRIMARY KEY (`id_contato`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-create index fk_funcionario_cargo_idx
-    on funcionario (id_cargo);
+--
+-- Dumping data for table `contato`
+--
 
-create index fk_funcionario_contato_idx
-    on funcionario (id_contato);
+LOCK TABLES `contato` WRITE;
+/*!40000 ALTER TABLE `contato` DISABLE KEYS */;
+INSERT INTO `contato` VALUES (1,'devaneio@hotel.com','(99)9999-9999','(99)9999-9999');
+/*!40000 ALTER TABLE `contato` ENABLE KEYS */;
+UNLOCK TABLES;
 
-create index fk_funcionario_endereco_idx
-    on funcionario (id_endereco);
+--
+-- Table structure for table `dados_hotel`
+--
 
-create table promocao
-(
-    id_promocao   int auto_increment
-        primary key,
-    nome_promocao varchar(100)   null,
-    desconto      decimal(10, 2) null,
-    data_inicio   datetime       null,
-    data_fim      datetime       null
-);
+DROP TABLE IF EXISTS `dados_hotel`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `dados_hotel` (
+  `id_dados_hotel` int NOT NULL AUTO_INCREMENT,
+  `nome` varchar(255) NOT NULL,
+  `cnpj` int NOT NULL,
+  `id_contato` int NOT NULL,
+  `id_endereco` int NOT NULL,
+  PRIMARY KEY (`id_dados_hotel`),
+  UNIQUE KEY `cnpj_UNIQUE` (`cnpj`),
+  KEY `fk_dados_hotel_contato_idx` (`id_contato`),
+  KEY `fk_dados_hotel_endereco_idx` (`id_endereco`),
+  CONSTRAINT `fk_dados_hotel_contato` FOREIGN KEY (`id_contato`) REFERENCES `contato` (`id_contato`),
+  CONSTRAINT `fk_dados_hotel_endereco` FOREIGN KEY (`id_endereco`) REFERENCES `endereco` (`id_endereco`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-create table quarto
-(
-    id_quarto int auto_increment
-        primary key,
-    nome      varchar(255)            not null,
-    descricao varchar(255)            not null,
-    preco     decimal(10, 2) unsigned not null
-);
+--
+-- Dumping data for table `dados_hotel`
+--
 
-create table servico_adicional
-(
-    id_servico_adicional int auto_increment
-        primary key,
-    nome                 varchar(255)            not null,
-    descricao            varchar(255)            not null,
-    preco                decimal(10, 2) unsigned not null
-);
+LOCK TABLES `dados_hotel` WRITE;
+/*!40000 ALTER TABLE `dados_hotel` DISABLE KEYS */;
+INSERT INTO `dados_hotel` VALUES (1,'Hotel DEVaneio',99999,1,1);
+/*!40000 ALTER TABLE `dados_hotel` ENABLE KEYS */;
+UNLOCK TABLES;
 
-create table hotel
-(
-    id_hotel             int auto_increment
-        primary key,
-    id_dados_hotel       int          not null,
-    id_funcionario       int          not null,
-    id_administrador     int          not null,
-    id_servico_adicional int          not null,
-    id_hospede           int unsigned not null,
-    constraint fk_hotel_administrador
-        foreign key (id_administrador) references administrador (id_administrador),
-    constraint fk_hotel_dadosHotel
-        foreign key (id_dados_hotel) references dados_hotel (id_dados_hotel),
-    constraint fk_hotel_funcionario
-        foreign key (id_funcionario) references funcionario (id_funcionario),
-    constraint fk_hotel_hospede
-        foreign key (id_hospede) references hospede (id_hospede),
-    constraint fk_hotel_servico_adicional
-        foreign key (id_servico_adicional) references servico_adicional (id_servico_adicional)
-);
+--
+-- Table structure for table `endereco`
+--
 
-create index fk_hotel_administrador_idx
-    on hotel (id_administrador);
+DROP TABLE IF EXISTS `endereco`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `endereco` (
+  `id_endereco` int NOT NULL AUTO_INCREMENT,
+  `rua` varchar(100) NOT NULL,
+  `bairro` varchar(100) NOT NULL,
+  `numero` int unsigned NOT NULL,
+  `cep` int NOT NULL,
+  `cidade` varchar(100) NOT NULL,
+  `uf` varchar(2) NOT NULL,
+  `complemento` varchar(100) NOT NULL,
+  PRIMARY KEY (`id_endereco`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-create index fk_hotel_dadosHotel_idx
-    on hotel (id_dados_hotel);
+--
+-- Dumping data for table `endereco`
+--
 
-create index fk_hotel_funcionario_idx
-    on hotel (id_funcionario);
+LOCK TABLES `endereco` WRITE;
+/*!40000 ALTER TABLE `endereco` DISABLE KEYS */;
+INSERT INTO `endereco` VALUES (1,'Rua Fictícia','Jd. Indefinido',999,99999999,'Neverland','NV','Terra média');
+/*!40000 ALTER TABLE `endereco` ENABLE KEYS */;
+UNLOCK TABLES;
 
-create index fk_hotel_hospede_idx
-    on hotel (id_hospede);
+--
+-- Table structure for table `funcionario`
+--
 
-create index fk_hotel_servico_adicional_idx
-    on hotel (id_servico_adicional);
+DROP TABLE IF EXISTS `funcionario`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `funcionario` (
+  `id_funcionario` int NOT NULL AUTO_INCREMENT,
+  `nome_funcionario` varchar(100) NOT NULL,
+  `sobrenome_funcionario` varchar(100) NOT NULL,
+  `cpf` int NOT NULL,
+  `id_cargo` int NOT NULL,
+  `id_contato` int NOT NULL,
+  `id_endereco` int NOT NULL,
+  `id_hotel` int NOT NULL,
+  PRIMARY KEY (`id_funcionario`),
+  UNIQUE KEY `cpf_UNIQUE` (`cpf`),
+  KEY `fk_funcionario_cargo_idx` (`id_cargo`),
+  KEY `fk_funcionario_contato_idx` (`id_contato`),
+  KEY `fk_funcionario_endereco_idx` (`id_endereco`),
+  KEY `fk_funcionario_id_hotel_idx` (`id_hotel`),
+  CONSTRAINT `fk_funcionario_id_cargo` FOREIGN KEY (`id_cargo`) REFERENCES `cargo` (`id_cargo`),
+  CONSTRAINT `fk_funcionario_id_contato` FOREIGN KEY (`id_contato`) REFERENCES `contato` (`id_contato`),
+  CONSTRAINT `fk_funcionario_id_endereco` FOREIGN KEY (`id_endereco`) REFERENCES `endereco` (`id_endereco`),
+  CONSTRAINT `fk_funcionario_id_hotel` FOREIGN KEY (`id_hotel`) REFERENCES `hotel` (`id_hotel`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-create table reserva
-(
-    id_reserva           int auto_increment,
-    check_in             datetime     not null,
-    check_out            datetime     not null,
-    qtd_adultos          int unsigned not null,
-    qtd_criancas         int unsigned not null,
-    id_servico_adicional int          not null,
-    id_quarto            int          not null,
-    primary key (id_reserva, id_servico_adicional),
-    constraint fk_reserva_quarto
-        foreign key (id_quarto) references quarto (id_quarto),
-    constraint fk_reserva_servico_adicional
-        foreign key (id_servico_adicional) references servico_adicional (id_servico_adicional)
-);
+--
+-- Dumping data for table `funcionario`
+--
 
+LOCK TABLES `funcionario` WRITE;
+/*!40000 ALTER TABLE `funcionario` DISABLE KEYS */;
+/*!40000 ALTER TABLE `funcionario` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `hospede`
+--
+
+DROP TABLE IF EXISTS `hospede`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `hospede` (
+  `id_hospede` int NOT NULL,
+  `nome` varchar(100) NOT NULL,
+  `sobrenome` varchar(100) NOT NULL,
+  `cpf` int NOT NULL,
+  `senha` varchar(25) NOT NULL,
+  `id_contato` int NOT NULL,
+  `id_hotel` int NOT NULL,
+  PRIMARY KEY (`id_hospede`),
+  UNIQUE KEY `cpf_UNIQUE` (`cpf`),
+  KEY `fsdf_idx` (`id_hotel`),
+  CONSTRAINT `fk_hospede_id_hotel` FOREIGN KEY (`id_hotel`) REFERENCES `hotel` (`id_hotel`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `hospede`
+--
+
+LOCK TABLES `hospede` WRITE;
+/*!40000 ALTER TABLE `hospede` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hospede` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `hotel`
+--
+
+DROP TABLE IF EXISTS `hotel`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `hotel` (
+  `id_hotel` int NOT NULL AUTO_INCREMENT,
+  `id_dados_hotel` int NOT NULL,
+  PRIMARY KEY (`id_hotel`),
+  KEY `fk_hotel_dadosHotel_idx` (`id_dados_hotel`),
+  CONSTRAINT `fk_hotel_dadosHotel` FOREIGN KEY (`id_dados_hotel`) REFERENCES `dados_hotel` (`id_dados_hotel`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `hotel`
+--
+
+LOCK TABLES `hotel` WRITE;
+/*!40000 ALTER TABLE `hotel` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hotel` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `promocao`
+--
+
+DROP TABLE IF EXISTS `promocao`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `promocao` (
+  `id_promocao` int NOT NULL AUTO_INCREMENT,
+  `nome_promocao` varchar(100) DEFAULT NULL,
+  `desconto` decimal(10,2) unsigned DEFAULT NULL,
+  `data_inicio` datetime DEFAULT NULL,
+  `data_fim` datetime DEFAULT NULL,
+  PRIMARY KEY (`id_promocao`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `promocao`
+--
+
+LOCK TABLES `promocao` WRITE;
+/*!40000 ALTER TABLE `promocao` DISABLE KEYS */;
+/*!40000 ALTER TABLE `promocao` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `quarto`
+--
+
+DROP TABLE IF EXISTS `quarto`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `quarto` (
+  `id_quarto` int NOT NULL AUTO_INCREMENT,
+  `nome` varchar(255) NOT NULL,
+  `descricao` varchar(255) NOT NULL,
+  `preco` decimal(10,2) unsigned NOT NULL,
+  PRIMARY KEY (`id_quarto`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `quarto`
+--
+
+LOCK TABLES `quarto` WRITE;
+/*!40000 ALTER TABLE `quarto` DISABLE KEYS */;
+/*!40000 ALTER TABLE `quarto` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `reserva`
+--
+
+DROP TABLE IF EXISTS `reserva`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `reserva` (
+  `id_reserva` int NOT NULL AUTO_INCREMENT,
+  `check_in` datetime NOT NULL,
+  `check_out` datetime NOT NULL,
+  `qtd_adultos` int unsigned NOT NULL,
+  `qtd_criancas` int unsigned NOT NULL,
+  `id_quarto` int NOT NULL,
+  `total_servicos` decimal(10,2) unsigned NOT NULL,
+  `total_reserva` decimal(10,2) unsigned NOT NULL,
+  PRIMARY KEY (`id_reserva`),
+  KEY `fk_reserva_quarto` (`id_quarto`),
+  CONSTRAINT `fk_reserva_quarto` FOREIGN KEY (`id_quarto`) REFERENCES `quarto` (`id_quarto`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `reserva`
+--
+
+LOCK TABLES `reserva` WRITE;
+/*!40000 ALTER TABLE `reserva` DISABLE KEYS */;
+/*!40000 ALTER TABLE `reserva` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `reserva_servico`
+--
+
+DROP TABLE IF EXISTS `reserva_servico`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `reserva_servico` (
+  `idreserva_servico` int NOT NULL AUTO_INCREMENT,
+  `id_reserva` int NOT NULL,
+  `id_servico_adicional` int NOT NULL,
+  PRIMARY KEY (`idreserva_servico`),
+  KEY `fk_reserva_servico_id_reserva_idx` (`id_reserva`),
+  KEY `fk_reserva_servico_id_servico_adicional_idx` (`id_servico_adicional`),
+  CONSTRAINT `fk_reserva_servico_id_reserva` FOREIGN KEY (`id_reserva`) REFERENCES `reserva` (`id_reserva`),
+  CONSTRAINT `fk_reserva_servico_id_servico_adicional` FOREIGN KEY (`id_servico_adicional`) REFERENCES `servico_adicional` (`id_servico_adicional`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `reserva_servico`
+--
+
+LOCK TABLES `reserva_servico` WRITE;
+/*!40000 ALTER TABLE `reserva_servico` DISABLE KEYS */;
+/*!40000 ALTER TABLE `reserva_servico` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `servico_adicional`
+--
+
+DROP TABLE IF EXISTS `servico_adicional`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `servico_adicional` (
+  `id_servico_adicional` int NOT NULL AUTO_INCREMENT,
+  `nome` varchar(255) NOT NULL,
+  `preco` decimal(10,2) unsigned NOT NULL,
+  `id_hotel` int NOT NULL,
+  PRIMARY KEY (`id_servico_adicional`),
+  KEY `fk_servico_adicional_id_hotel_idx` (`id_hotel`) /*!80000 INVISIBLE */,
+  CONSTRAINT `fk_servico_adicional_id_hotel` FOREIGN KEY (`id_hotel`) REFERENCES `hotel` (`id_hotel`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `servico_adicional`
+--
+
+LOCK TABLES `servico_adicional` WRITE;
+/*!40000 ALTER TABLE `servico_adicional` DISABLE KEYS */;
+/*!40000 ALTER TABLE `servico_adicional` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2023-03-03 23:16:54
