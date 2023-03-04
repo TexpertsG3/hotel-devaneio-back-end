@@ -1,4 +1,4 @@
-package hotel;
+package DAO;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -7,6 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import model.ServicoAdicional;
+import util.ConnectionFactory;
 
 public class ServicoAdicionalDAO {
 

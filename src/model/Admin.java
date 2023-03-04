@@ -1,4 +1,4 @@
-package hotel;
+package model;
 
 public class Admin {
 

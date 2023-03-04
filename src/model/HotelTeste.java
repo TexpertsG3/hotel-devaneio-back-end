@@ -1,22 +1,17 @@
-package hotel;
+package model;
 
 import java.math.BigDecimal;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.HashSet;
 import java.util.Scanner;
-import java.util.Set;
 
+import DAO.ServicoAdicionalDAO;
 import exception.AlojamentoInexistenteException;
 import exception.DadosInvalidosException;
 import exception.DataInvalidaException;
-import exception.ServicoInexistenteException;
 import exception.UsuarioNaoCadastradoException;
-import exception.UsuarioSemAcessoAdministrativoException;
 
 public class HotelTeste {
 

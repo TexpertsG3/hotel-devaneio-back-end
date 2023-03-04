@@ -1,4 +1,4 @@
-package hotel;
+package model;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
