@@ -1,4 +1,4 @@
-package model;
+package com.hotels.tex.model;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -14,8 +14,9 @@ public class Hotel {
 	private Set<Funcionario> listaDeFuncionarios = new HashSet<>();
 	private List<Reserva> listaDeReservas = new ArrayList<>();
 
-	public Hotel() {
-
+	public Hotel(Integer idHotel, DadosHotel dadosHotel) {
+		this.idHotel = idHotel;
+		this.dadosHotel = dadosHotel;
 	}
 
 	public Hotel(DadosHotel dadosHotel) {
@@ -33,10 +34,6 @@ public class Hotel {
 	
 	public Integer getIdHotel() {
 		return idHotel;
-	}
-
-	public void setIdHotel(Integer idHotel) {
-		this.idHotel = idHotel;
 	}
 
 	public DadosHotel getDadosHotel() {
@@ -102,7 +99,6 @@ public class Hotel {
 		return total;
 	}
 
-
 	public static BigDecimal somaServicos(List<ServicoAdicional> servicos) {
 		BigDecimal resultado = BigDecimal.ZERO;
 		for (ServicoAdicional servico : servicos) {
@@ -119,15 +115,13 @@ public class Hotel {
 		}
 		return totalServico;
 	}
-
+	
 	@Override
 	public String toString() {
-
-		return "Hotel - " + this.dadosHotel.getNome() + "\n" + "Rua - " + this.dadosHotel.getEndereco().getRua()
-				+ "\nBairro - " + this.dadosHotel.getEndereco().getBairro() + "\nCidade - "
-				+ this.dadosHotel.getEndereco().getCidade() + "\nEstado - " + this.dadosHotel.getEndereco().getEstado()
-				+ "\nCEP - " + this.dadosHotel.getEndereco().getCep() + "\nCNPJ - " + this.dadosHotel.getCnpj();
-
+		return "\nRegistro: " + idHotel +  "\nHotel: " + dadosHotel.getNome() + "\nCNPJ: " + dadosHotel.getCnpj() + "\nEmail: " + dadosHotel.getContato().getEmail() 
+				+ "\nTelefone: " + dadosHotel.getContato().getTelefone() + " / Celular: " + dadosHotel.getContato().getCelular() 
+				+ "\nEndereco: " + dadosHotel.getEndereco().getRua() + ", " + dadosHotel.getEndereco().getNumero() + " - Bairro: " + dadosHotel.getEndereco().getBairro() 
+				+ "\nCidade: " + dadosHotel.getEndereco().getCidade() + " / " + dadosHotel.getEndereco().getUf() + "\nComplemento: " + dadosHotel.getEndereco().getComplemento() + "\n";
 	}
 
 }

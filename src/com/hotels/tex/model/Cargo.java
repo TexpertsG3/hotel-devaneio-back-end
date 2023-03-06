@@ -1,4 +1,4 @@
-package model;
+package com.hotels.tex.model;
 
 public class Cargo {
 	

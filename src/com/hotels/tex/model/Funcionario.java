@@ -1,9 +1,9 @@
-package model;
+package com.hotels.tex.model;
 
 import java.math.BigDecimal;
 import java.util.Objects;
 
-import exception.SalarioInvalidoException;
+import com.hotels.tex.exception.SalarioInvalidoException;
 
 public class Funcionario {
 

@@ -1,4 +1,4 @@
-package model;
+package com.hotels.tex.model;
 
 import java.util.HashSet;
 import java.util.Set;

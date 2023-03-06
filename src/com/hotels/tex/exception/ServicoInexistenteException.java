@@ -1,4 +1,4 @@
-package exception;
+package com.hotels.tex.exception;
 
 public class ServicoInexistenteException extends RuntimeException {
 

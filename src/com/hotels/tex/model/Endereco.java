@@ -1,28 +1,31 @@
-package model;
+package com.hotels.tex.model;
 
 public class Endereco {
 
 	private Integer idEndereco;
 	private String rua;
 	private String bairro;
-	private String numero;
+	private Integer numero;
 	private String cep;
 	private String cidade;
-	private String estado;
+	private String uf;
+	private String complemento;
 
-	public Endereco(String rua, String bairro, String numero, String cep, String cidade, String estado) {
+	public Endereco(String rua, String bairro, Integer numero, String cep, String cidade, String uf,
+			String complemento) {
 		this.rua = rua;
 		this.bairro = bairro;
 		this.numero = numero;
 		this.cep = cep;
 		this.cidade = cidade;
-		this.estado = estado;
+		this.uf = uf;
+		this.complemento = complemento;
 	}
-	
+
 	public Integer getIdEndereco() {
 		return idEndereco;
 	}
-	
+
 	public void setIdEndereco(Integer idEndereco) {
 		this.idEndereco = idEndereco;
 	}
@@ -43,11 +46,11 @@ public class Endereco {
 		this.bairro = bairro;
 	}
 
-	public String getNumero() {
+	public Integer getNumero() {
 		return numero;
 	}
 
-	public void setNumero(String numero) {
+	public void setNumero(Integer numero) {
 		this.numero = numero;
 	}
 
@@ -67,12 +70,20 @@ public class Endereco {
 		this.cidade = cidade;
 	}
 
-	public String getEstado() {
-		return estado;
+	public String getUf() {
+		return uf;
 	}
 
-	public void setEstado(String estado) {
-		this.estado = estado;
+	public void setUf(String uf) {
+		this.uf = uf;
+	}
+
+	public String getComplemento() {
+		return complemento;
+	}
+
+	public void setComplemento(String complemento) {
+		this.complemento = complemento;
 	}
 
 }

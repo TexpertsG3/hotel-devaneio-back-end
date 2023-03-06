@@ -39,15 +39,6 @@ CREATE TABLE `administrador` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `administrador`
---
-
-LOCK TABLES `administrador` WRITE;
-/*!40000 ALTER TABLE `administrador` DISABLE KEYS */;
-/*!40000 ALTER TABLE `administrador` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `cargo`
 --
 
@@ -63,15 +54,6 @@ CREATE TABLE `cargo` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `cargo`
---
-
-LOCK TABLES `cargo` WRITE;
-/*!40000 ALTER TABLE `cargo` DISABLE KEYS */;
-/*!40000 ALTER TABLE `cargo` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `contato`
 --
 
@@ -84,18 +66,8 @@ CREATE TABLE `contato` (
   `telefone` varchar(45) NOT NULL,
   `celular` varchar(45) NOT NULL,
   PRIMARY KEY (`id_contato`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `contato`
---
-
-LOCK TABLES `contato` WRITE;
-/*!40000 ALTER TABLE `contato` DISABLE KEYS */;
-INSERT INTO `contato` VALUES (1,'devaneio@hotel.com','(99)9999-9999','(99)9999-9999');
-/*!40000 ALTER TABLE `contato` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `dados_hotel`
@@ -107,27 +79,16 @@ DROP TABLE IF EXISTS `dados_hotel`;
 CREATE TABLE `dados_hotel` (
   `id_dados_hotel` int NOT NULL AUTO_INCREMENT,
   `nome` varchar(255) NOT NULL,
-  `cnpj` int NOT NULL,
+  `cnpj` varchar(14) NOT NULL,
   `id_contato` int NOT NULL,
   `id_endereco` int NOT NULL,
   PRIMARY KEY (`id_dados_hotel`),
-  UNIQUE KEY `cnpj_UNIQUE` (`cnpj`),
   KEY `fk_dados_hotel_contato_idx` (`id_contato`),
   KEY `fk_dados_hotel_endereco_idx` (`id_endereco`),
-  CONSTRAINT `fk_dados_hotel_contato` FOREIGN KEY (`id_contato`) REFERENCES `contato` (`id_contato`),
-  CONSTRAINT `fk_dados_hotel_endereco` FOREIGN KEY (`id_endereco`) REFERENCES `endereco` (`id_endereco`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `fk_dados_hotel_contato` FOREIGN KEY (`id_contato`) REFERENCES `contato` (`id_contato`) ON DELETE CASCADE,
+  CONSTRAINT `fk_dados_hotel_endereco` FOREIGN KEY (`id_endereco`) REFERENCES `endereco` (`id_endereco`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `dados_hotel`
---
-
-LOCK TABLES `dados_hotel` WRITE;
-/*!40000 ALTER TABLE `dados_hotel` DISABLE KEYS */;
-INSERT INTO `dados_hotel` VALUES (1,'Hotel DEVaneio',99999,1,1);
-/*!40000 ALTER TABLE `dados_hotel` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `endereco`
@@ -141,23 +102,13 @@ CREATE TABLE `endereco` (
   `rua` varchar(100) NOT NULL,
   `bairro` varchar(100) NOT NULL,
   `numero` int unsigned NOT NULL,
-  `cep` int NOT NULL,
+  `cep` varchar(8) NOT NULL,
   `cidade` varchar(100) NOT NULL,
   `uf` varchar(2) NOT NULL,
   `complemento` varchar(100) NOT NULL,
   PRIMARY KEY (`id_endereco`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `endereco`
---
-
-LOCK TABLES `endereco` WRITE;
-/*!40000 ALTER TABLE `endereco` DISABLE KEYS */;
-INSERT INTO `endereco` VALUES (1,'Rua Fictícia','Jd. Indefinido',999,99999999,'Neverland','NV','Terra média');
-/*!40000 ALTER TABLE `endereco` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `funcionario`
@@ -189,15 +140,6 @@ CREATE TABLE `funcionario` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `funcionario`
---
-
-LOCK TABLES `funcionario` WRITE;
-/*!40000 ALTER TABLE `funcionario` DISABLE KEYS */;
-/*!40000 ALTER TABLE `funcionario` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `hospede`
 --
 
@@ -220,15 +162,6 @@ CREATE TABLE `hospede` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `hospede`
---
-
-LOCK TABLES `hospede` WRITE;
-/*!40000 ALTER TABLE `hospede` DISABLE KEYS */;
-/*!40000 ALTER TABLE `hospede` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `hotel`
 --
 
@@ -239,19 +172,11 @@ CREATE TABLE `hotel` (
   `id_hotel` int NOT NULL AUTO_INCREMENT,
   `id_dados_hotel` int NOT NULL,
   PRIMARY KEY (`id_hotel`),
+  UNIQUE KEY `id_dados_hotel_UNIQUE` (`id_dados_hotel`),
   KEY `fk_hotel_dadosHotel_idx` (`id_dados_hotel`),
-  CONSTRAINT `fk_hotel_dadosHotel` FOREIGN KEY (`id_dados_hotel`) REFERENCES `dados_hotel` (`id_dados_hotel`)
+  CONSTRAINT `fk_hotel_dadosHotel` FOREIGN KEY (`id_dados_hotel`) REFERENCES `dados_hotel` (`id_dados_hotel`) ON DELETE CASCADE ON UPDATE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `hotel`
---
-
-LOCK TABLES `hotel` WRITE;
-/*!40000 ALTER TABLE `hotel` DISABLE KEYS */;
-/*!40000 ALTER TABLE `hotel` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `promocao`
@@ -271,15 +196,6 @@ CREATE TABLE `promocao` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `promocao`
---
-
-LOCK TABLES `promocao` WRITE;
-/*!40000 ALTER TABLE `promocao` DISABLE KEYS */;
-/*!40000 ALTER TABLE `promocao` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `quarto`
 --
 
@@ -294,15 +210,6 @@ CREATE TABLE `quarto` (
   PRIMARY KEY (`id_quarto`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `quarto`
---
-
-LOCK TABLES `quarto` WRITE;
-/*!40000 ALTER TABLE `quarto` DISABLE KEYS */;
-/*!40000 ALTER TABLE `quarto` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `reserva`
@@ -327,15 +234,6 @@ CREATE TABLE `reserva` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `reserva`
---
-
-LOCK TABLES `reserva` WRITE;
-/*!40000 ALTER TABLE `reserva` DISABLE KEYS */;
-/*!40000 ALTER TABLE `reserva` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `reserva_servico`
 --
 
@@ -355,15 +253,6 @@ CREATE TABLE `reserva_servico` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `reserva_servico`
---
-
-LOCK TABLES `reserva_servico` WRITE;
-/*!40000 ALTER TABLE `reserva_servico` DISABLE KEYS */;
-/*!40000 ALTER TABLE `reserva_servico` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `servico_adicional`
 --
 
@@ -378,17 +267,8 @@ CREATE TABLE `servico_adicional` (
   PRIMARY KEY (`id_servico_adicional`),
   KEY `fk_servico_adicional_id_hotel_idx` (`id_hotel`) /*!80000 INVISIBLE */,
   CONSTRAINT `fk_servico_adicional_id_hotel` FOREIGN KEY (`id_hotel`) REFERENCES `hotel` (`id_hotel`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `servico_adicional`
---
-
-LOCK TABLES `servico_adicional` WRITE;
-/*!40000 ALTER TABLE `servico_adicional` DISABLE KEYS */;
-/*!40000 ALTER TABLE `servico_adicional` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -399,4 +279,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-03-03 23:16:54
+-- Dump completed on 2023-03-05 11:10:11

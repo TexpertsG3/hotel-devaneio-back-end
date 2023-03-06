@@ -1,4 +1,4 @@
-package model;
+package com.hotels.tex.model;
 
 import java.math.BigDecimal;
 
@@ -49,7 +49,7 @@ public class ServicoAdicional {
 
 	@Override
 	public String toString() {
-		return this.nomeServico + "\n" + "Valor - R$" + this.valorServico + "\n";
+		return "\nNome: " + this.nomeServico + "\n" + "Valor - R$" + this.valorServico + "\n";
 	}
 
 }
