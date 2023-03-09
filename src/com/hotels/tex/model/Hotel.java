@@ -14,6 +14,10 @@ public class Hotel {
 	private Set<Funcionario> listaDeFuncionarios = new HashSet<>();
 	private List<Reserva> listaDeReservas = new ArrayList<>();
 
+	public Hotel(Integer idHotel) {
+		this.idHotel = idHotel;
+	}
+	
 	public Hotel(Integer idHotel, DadosHotel dadosHotel) {
 		this.idHotel = idHotel;
 		this.dadosHotel = dadosHotel;
@@ -32,6 +36,11 @@ public class Hotel {
 		this.listaDeReservas = listaDeReservas;
 	}
 	
+	
+	public void setIdHotel(Integer idHotel) {
+		this.idHotel = idHotel;
+	}
+
 	public Integer getIdHotel() {
 		return idHotel;
 	}
@@ -68,52 +77,12 @@ public class Hotel {
 		this.listaDeReservas = listaDeReservas;
 	}
 
-	public BigDecimal calculaValorDiaria(Reserva reserva) {
-		BigDecimal totalDiaria = BigDecimal.ZERO;
-
-		if (reserva.getQuantidadeAdultos() > 2) {
-			BigDecimal temp = new BigDecimal(reserva.getQuantidadeAdultos() - 2).multiply(BigDecimal.valueOf(10.00));
-			totalDiaria = totalDiaria.add(temp);
-		}
-
-		if (reserva.getQuantidadeCriancas() > 2) {
-			BigDecimal temp = new BigDecimal(reserva.getQuantidadeCriancas() - 2).multiply(BigDecimal.valueOf(5.00));
-			totalDiaria = totalDiaria.add(temp);
-		}
-
-		Integer dias = Integer.valueOf(reserva.getCheckOut().getDayOfYear() - reserva.getCheckIn().getDayOfYear());
-
-		totalDiaria = totalDiaria.add(reserva.getQuarto().getValor());
-		totalDiaria = totalDiaria.multiply(new BigDecimal(dias));
-
-		return totalDiaria;
-	}
-
-	public BigDecimal calculaTotalReserva(Set<ServicoAdicional> servicoAdicional, Reserva reserva) {
-		BigDecimal diaria = calculaValorDiaria(reserva);
-		BigDecimal servico = calculaValorServico(servicoAdicional);
-
-		BigDecimal total = BigDecimal.ZERO;
-		total = total.add(diaria).add(servico);
-
-		return total;
-	}
-
 	public static BigDecimal somaServicos(List<ServicoAdicional> servicos) {
 		BigDecimal resultado = BigDecimal.ZERO;
 		for (ServicoAdicional servico : servicos) {
 			resultado = resultado.add(servico.getValorServico());
 		}
 		return resultado;
-	}
-
-	public BigDecimal calculaValorServico(Set<ServicoAdicional> servicos) {
-		BigDecimal totalServico = BigDecimal.ZERO;
-
-		for (ServicoAdicional servico : servicos) {
-			totalServico = totalServico.add(servico.getValorServico());
-		}
-		return totalServico;
 	}
 	
 	@Override

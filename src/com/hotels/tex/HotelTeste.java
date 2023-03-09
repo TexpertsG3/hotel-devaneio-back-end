@@ -1,15 +1,24 @@
 package com.hotels.tex;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
+import com.hotels.tex.dao.AlojamentoDAO;
 import com.hotels.tex.dao.ContatoDAO;
 import com.hotels.tex.dao.DadosHotelDAO;
 import com.hotels.tex.dao.EnderecoDAO;
 import com.hotels.tex.dao.HotelDAO;
+import com.hotels.tex.dao.ReservaDAO;
 import com.hotels.tex.dao.ServicoAdicionalDAO;
 import com.hotels.tex.exception.DadosInvalidosException;
+import com.hotels.tex.exception.DataInvalidaException;
+import com.hotels.tex.model.Alojamento;
 import com.hotels.tex.model.Contato;
 import com.hotels.tex.model.DadosHotel;
 import com.hotels.tex.model.Endereco;
@@ -26,8 +35,21 @@ public class HotelTeste {
 		ServicoAdicionalDAO servicoDAO = new ServicoAdicionalDAO();
 		ContatoDAO contatoDAO = new ContatoDAO();
 		EnderecoDAO enderecoDAO = new EnderecoDAO();
-
-		ServicoAdicional servico1 = new ServicoAdicional("Auditório de Eventos", new BigDecimal("150.00"), 1);
+		ReservaDAO reservaDAO = new ReservaDAO();
+		AlojamentoDAO alojamentoDAO = new AlojamentoDAO();
+		
+//		Hotel hi = new Hotel(1);
+//		Alojamento testealoj = new Alojamento("222222222222", "asdasd", new BigDecimal(200.00), hi);
+//		alojamentoDAO.insere(testealoj);
+		
+		System.out.println(reservaDAO.listagem());
+		//enderecoDAO.delete(1);
+		//contatoDAO.delete(1);
+		hotelDAO.delete(1);
+		
+		
+		
+		
 
 //		try {
 //			contato.insere(contato1);
@@ -38,7 +60,7 @@ public class HotelTeste {
 //		try {
 //			endereco.insere(endereco1);
 //		} catch (SQLException e1) {
-		
+
 //			e1.printStackTrace();
 //		}
 //		
@@ -104,7 +126,8 @@ public class HotelTeste {
 			System.out.println("2 - Consultar hotéis cadastrados");
 			System.out.println("3 - Cadastrar serviço adicional");
 			System.out.println("4 - Consultar serviços adicionais");
-			System.out.println("5 - Acesso Administrativo\n");
+			System.out.println("5 - Cadastrar uma nova reserva");
+			System.out.println("6 - Acesso Administrativo\n");
 			System.out.println("0 - Sair do sistema");
 
 			opcaoMenu = sc.nextInt();
@@ -468,6 +491,63 @@ public class HotelTeste {
 				break;
 
 			case 5:
+				System.out.println("\nCadastro de nova reserva: ");
+
+				LocalDate checkIn;
+				try {
+					System.out.print("\nData checkIn (formato exemplo 01/01/2023): ");
+					String dataCheckin = sc.nextLine();
+					checkIn = LocalDate.parse(dataCheckin, dataFormatada);
+					if (checkIn.isBefore(LocalDate.now())) {
+						throw new DataInvalidaException("A data de checkin deve ser superior ou igual a data atual.");
+					}
+				} catch (DateTimeParseException e) {
+					throw new DataInvalidaException("Formato de data inválido.");
+				}
+
+				LocalDate checkOut;
+				try {
+					System.out.print("Data checkOut (formato exemplo 02/01/2023): ");
+					String dataCheckout = sc.nextLine();
+					checkOut = LocalDate.parse(dataCheckout, dataFormatada);
+					if (checkOut.isBefore(checkIn) || checkOut.isEqual(checkIn)) {
+						throw new DataInvalidaException(
+								"Data inválida. A data de checkout deve ser superior a data de checkin.");
+					}
+				} catch (DateTimeParseException e) {
+					throw new DataInvalidaException("Formato de data inválido.");
+				}
+
+				System.out.print("Quantidade de adultos: ");
+				Integer quantidaDeAdultos = sc.nextInt();
+				sc.nextLine();
+
+				System.out.print("Quantidade de crianças: ");
+				Integer quantidaDeCriancas = sc.nextInt();
+				sc.nextLine();
+
+				System.out.println("\nTemos os seguintes serviços adicionais disponíveis: \n");
+
+				List<ServicoAdicional> listaDisponiveis = servicoDAO.listagem();
+				System.out.println(listaDisponiveis);
+
+				Set<ServicoAdicional> listaAdicionados = new HashSet<>();
+
+				Integer valor;
+
+				do {
+
+					valor = sc.nextInt();
+
+					if (valor > 1) {
+						listaAdicionados.add(listaDisponiveis.get(valor));
+					} else {
+						listaAdicionados.add(listaDisponiveis.get(valor-1));
+					}
+
+				} while (!valor.equals(0));
+
+				System.out.println(listaAdicionados);
 
 //				System.out.println("\nLogin administrativo:");
 //				System.out.print("Email: ");
@@ -491,53 +571,53 @@ public class HotelTeste {
 //					e.printStackTrace();
 //				}
 
-				Integer menuAdm;
-				do {
+//				Integer menuAdm;
+//				do {
 
 //					System.out.printf("\n\n%s, seja bem vindo ao sistema administrativo. Escolha uma opção: \n\n", admin.getNome());
-					System.out.println("1 - Cadastro de funcionários");
-					System.out.println("2 - Consulta de funcionários");
-					System.out.println("3 - Sistema para cadastro de novos administradores");
-					System.out.println("4 - Sistema para quitação de reservas");
-					System.out.println("0 - Sair do sistema administrativo");
+//					System.out.println("1 - Cadastro de funcionários");
+//					System.out.println("2 - Consulta de funcionários");
+//					System.out.println("3 - Sistema para cadastro de novos administradores");
+//					System.out.println("4 - Sistema para quitação de reservas");
+//					System.out.println("0 - Sair do sistema administrativo");
 
-					menuAdm = sc.nextInt();
-					sc.nextLine();
-
-					switch (menuAdm) {
-					case 1:
-						System.out.print("\nDigite o nome do funcionário: ");
-						String nomeFuncionario = sc.nextLine();
-						System.out.print("\nDigite o sobrenome do funcionário: ");
-						String sobrenomeFuncionario = sc.nextLine();
-						System.out.print("\nDigite o cargo do funcionário: ");
-						String cargoDoFuncionario = sc.nextLine();
-						System.out.print("\nDigite o salário do funcionário: ");
-						String salarioDoFuncionario = sc.nextLine();
+//					menuAdm = sc.nextInt();
+//					sc.nextLine();
+//
+//					switch (menuAdm) {
+//					case 1:
+//						System.out.print("\nDigite o nome do funcionário: ");
+//						String nomeFuncionario = sc.nextLine();
+//						System.out.print("\nDigite o sobrenome do funcionário: ");
+//						String sobrenomeFuncionario = sc.nextLine();
+//						System.out.print("\nDigite o cargo do funcionário: ");
+//						String cargoDoFuncionario = sc.nextLine();
+//						System.out.print("\nDigite o salário do funcionário: ");
+//						String salarioDoFuncionario = sc.nextLine();
 
 //						Funcionario funcionario = new Funcionario(nomeFuncionario, sobrenomeFuncionario, new Cargo(cargoDoFuncionario), new BigDecimal(salarioDoFuncionario));
 //						System.out.printf("\nO funcionário %s foi cadastrado com sucesso!\n", funcionario.getNome());
 //						System.out.println(funcionario);
 //						hotel.getListaDeFuncionarios().add(funcionario);
 
-						break;
-					case 2:
+//						break;
+//					case 2:
 //						System.out.printf("\nFuncionários do hotel %s:\n", hotel.getDadosHotel().getNome());
 //						for (Funcionario funcionarioCadastrado : hotel.getListaDeFuncionarios()) {
 //							System.out.println(funcionarioCadastrado);
 //							}
-						break;
-					default:
-						break;
-					}
-
-				} while (!menuAdm.equals(0));
-
-				break;
-
-			default:
-
-				break;
+//						break;
+//					default:
+//						break;
+//					}
+//
+//				} while (!menuAdm.equals(0));
+//
+//				break;
+//
+//			default:
+//
+//				break;
 			}
 
 		} while (!opcaoMenu.equals(0));

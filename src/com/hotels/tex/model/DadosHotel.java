@@ -15,6 +15,11 @@ public class DadosHotel {
 		this.endereco = endereco;
 	}
 
+	public DadosHotel(String nome, String cnpj) {
+		this.nome = nome;
+		this.cnpj = cnpj;
+	}
+
 	public Integer getIdDadosHotel() {
 		return idDadosHotel;
 	}

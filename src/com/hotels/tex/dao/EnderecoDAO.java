@@ -11,7 +11,7 @@ import com.hotels.tex.utils.ConnectionFactory;
 
 public class EnderecoDAO {
 	
-	private static final String ERRO_CONEXAO = "Erro na conexão com o banco de dados. Verifique e tente novamente.";
+	private final String ERRO_CONEXAO = "Erro na conexão com o banco de dados. Verifique e tente novamente.";
 
 	public void insere(Endereco endereco) {
 
@@ -39,7 +39,32 @@ public class EnderecoDAO {
 			}    
 			
 		} catch (SQLException e) {
-			System.err.println(ERRO_CONEXAO + e.getMessage());
+			System.err.println(ERRO_CONEXAO + "\n" + e.getMessage());
 		}
+	}
+	
+	public void delete(Integer idEndereco) {
+		String sql = "SELECT * FROM endereco WHERE id_endereco = ?";
+		
+		String sql2 = "DELETE FROM endereco WHERE id_endereco = ?";
+		
+		try (Connection conn = ConnectionFactory.criaConexao();
+		    	 PreparedStatement st1 = conn.prepareStatement(sql);
+		    	 PreparedStatement st2 = conn.prepareStatement(sql2)) {
+
+				st1.setInt(1, idEndereco);
+		        ResultSet rs = st1.executeQuery();
+		             
+		        if (!rs.next()) {
+		            throw new SQLException("Não existe nenhum endereco com o id " + idEndereco);
+		        }
+		        
+		        st2.setInt(1, idEndereco);
+		        st2.executeUpdate();
+		        
+		
+		} catch (SQLException e) {
+	        throw new RuntimeException("Erro ao verificar se existe um endereco com o id " + idEndereco + ": " + e.getMessage());
+	    }
 	}
 }

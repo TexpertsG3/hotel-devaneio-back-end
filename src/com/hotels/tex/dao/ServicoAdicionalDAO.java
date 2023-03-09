@@ -12,7 +12,7 @@ import com.hotels.tex.utils.ConnectionFactory;
 
 public class ServicoAdicionalDAO {
 	
-	private static final String ERRO_CONEXAO = "Erro na conexão com o banco de dados. Verifique e tente novamente.";
+	private final String ERRO_CONEXAO = "Erro na conexão com o banco de dados. Verifique e tente novamente.";
 
 	HotelDAO hotelDao = new HotelDAO();
 
@@ -31,7 +31,7 @@ public class ServicoAdicionalDAO {
 			st.execute();
 			System.out.println("Serviço " + servicoAdicional.getNomeServico() + " adicionado com sucesso.");
 		} catch (SQLException e) {
-			System.err.println(e.getMessage());
+			System.err.println(ERRO_CONEXAO + "\n" + e.getMessage());
 		}
 
 	}
@@ -52,7 +52,7 @@ public class ServicoAdicionalDAO {
 			}
 
 		} catch (SQLException e) {
-			System.err.println(ERRO_CONEXAO + e.getMessage());
+			System.err.println(ERRO_CONEXAO + "\n" + e.getMessage());
 		}
 
 		return lista;

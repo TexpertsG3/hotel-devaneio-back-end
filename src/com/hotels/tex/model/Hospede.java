@@ -10,10 +10,14 @@ public class Hospede {
 	private String cpf;
 	private String email;
 	private String senha;
-	private Integer idHotel;
+	private Hotel hotel;
+	
+	public Hospede(Integer idHospede) {
+		this.idHospede = idHospede;
+	}
 
-	public Hospede(String nome, String sobrenome, String cpf, String email, String senha, Integer idHotel) {
-		this.idHotel = idHotel;
+	public Hospede(String nome, String sobrenome, String cpf, String email, String senha, Hotel hotel) {
+		this.hotel = hotel;
 		this.nome = nome;
 		this.sobrenome = sobrenome;
 		this.cpf = cpf;
@@ -69,12 +73,12 @@ public class Hospede {
 		this.senha = senha;
 	}
 
-	public Integer getIdHotel() {
-		return idHotel;
+	public Hotel getHotel() {
+		return hotel;
 	}
 
-	public void setIdHotel(Integer idHotel) {
-		this.idHotel = idHotel;
+	public void setHotel(Hotel hotel) {
+		this.hotel = hotel;
 	}
 
 	@Override

@@ -6,12 +6,31 @@ public class Alojamento {
 
 	private Integer idAlojamento;
 	private String nomeAlojamento;
+	private String descricao;
 	private BigDecimal valor;
-	private Integer idHotel;
-
-	public Alojamento(String nomeAlojamento, BigDecimal valor, Integer idHotel) {
-		this.idHotel = idHotel;
+	private Hotel hotel;
+	
+	public Alojamento(Integer idAlojamento) {
+		this.idAlojamento = idAlojamento;
+	}
+	
+	public Alojamento(Integer idAlojamento, String nomeAlojamento) {
+		this.idAlojamento = idAlojamento;
 		this.nomeAlojamento = nomeAlojamento;
+	}
+
+	public Alojamento(String nomeAlojamento, String descricao, BigDecimal valor, Hotel hotel) {
+		this.hotel = hotel;
+		this.nomeAlojamento = nomeAlojamento;
+		this.descricao = descricao;
+		this.valor = valor;
+	}
+	
+	public Alojamento(Integer idAlojamento, String nomeAlojamento, String descricao, BigDecimal valor, Hotel hotel) {
+		this.idAlojamento = idAlojamento;
+		this.hotel = hotel;
+		this.nomeAlojamento = nomeAlojamento;
+		this.descricao = descricao;
 		this.valor = valor;
 	}
 
@@ -23,12 +42,12 @@ public class Alojamento {
 		this.idAlojamento = idAlojamento;
 	}
 
-	public Integer getIdHotel() {
-		return idHotel;
+	public Hotel getHotel() {
+		return hotel;
 	}
 
-	public void setIdHotel(Integer idHotel) {
-		this.idHotel = idHotel;
+	public void setHotel(Hotel hotel) {
+		this.hotel = hotel;
 	}
 
 	public String getNomeAlojamento() {
@@ -37,6 +56,14 @@ public class Alojamento {
 
 	public void setNomeAlojamento(String nomeAlojamento) {
 		this.nomeAlojamento = nomeAlojamento;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
 	public BigDecimal getValor() {
@@ -50,7 +77,8 @@ public class Alojamento {
 	@Override
 	public String toString() {
 
-		return "Alojamento - " + this.nomeAlojamento + "\n" + "Valor da diária - R$" + this.valor;
+		return "\nRegistro do Hotel: " + hotel.getIdHotel() + "    " + "Nome: " + hotel.getDadosHotel().getNome()
+				+ "\nAlojamento - " + this.nomeAlojamento + "\n" + "Valor da diária - R$" + this.valor;
 	}
 
 }
