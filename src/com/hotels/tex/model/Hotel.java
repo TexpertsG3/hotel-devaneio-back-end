@@ -36,7 +36,10 @@ public class Hotel {
 		this.listaDeReservas = listaDeReservas;
 	}
 	
-	
+	public Hotel() {
+		
+	}
+
 	public void setIdHotel(Integer idHotel) {
 		this.idHotel = idHotel;
 	}

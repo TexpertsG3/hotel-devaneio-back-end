@@ -14,6 +14,10 @@ public class DadosHotel {
 		this.contato = contato;
 		this.endereco = endereco;
 	}
+	
+	public DadosHotel(Integer idDadosHotel) {
+		this.idDadosHotel = idDadosHotel;
+	}
 
 	public DadosHotel(String nome, String cnpj) {
 		this.nome = nome;
