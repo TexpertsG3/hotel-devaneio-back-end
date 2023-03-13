@@ -45,7 +45,7 @@ public class HotelTeste {
 		System.out.println(reservaDAO.listagem());
 		//enderecoDAO.delete(1);
 		//contatoDAO.delete(1);
-		hotelDAO.delete(1);
+//		hotelDAO.delete(1);
 		
 		
 		
