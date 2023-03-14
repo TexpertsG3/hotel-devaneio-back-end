@@ -11,6 +11,10 @@ public class Endereco {
 	private String uf;
 	private String complemento;
 
+	public Endereco(Integer idEndereco) {
+		this.idEndereco=idEndereco;
+	}
+	
 	public Endereco(String rua, String bairro, Integer numero, String cep, String cidade, String uf,
 			String complemento) {
 		this.rua = rua;

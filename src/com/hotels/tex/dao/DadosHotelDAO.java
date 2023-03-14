@@ -36,6 +36,24 @@ public class DadosHotelDAO {
 		}
 	}
 	
+	public void update(DadosHotel dadosHotel) {
+		String sql = "update dados_hotel set nome=?, cnpj=?, id_contato=?, id_endereco=? where id =? ";
+		try (Connection conn = ConnectionFactory.criaConexao();
+				PreparedStatement st = conn.prepareStatement(sql)) {
+			 	st.setString(1, dadosHotel.getNome());
+			 	st.setString(2,  dadosHotel.getCnpj());
+			 	st.setInt(3, dadosHotel.getContato().getIdContato());
+			 	st.setInt(4, dadosHotel.getEndereco().getIdEndereco());
+			 	st.setInt(5, dadosHotel.getIdDadosHotel());
+			 	st.execute();
+		
+		
+		} catch (SQLException e) {
+			System.err.println(ERRO_CONEXAO + e.getMessage());
+		}
+	}
+	
+	
 	public void delete(Integer idDadosHotel) {
 		String sql = "SELECT * FROM dados_hotel WHERE id_dados_hotel = ?";
 		
@@ -60,4 +78,5 @@ public class DadosHotelDAO {
 	        throw new RuntimeException("Erro ao verificar se existe um dado com o id " + idDadosHotel + ": " + e.getMessage());
 	    }
 	}
+	
 }

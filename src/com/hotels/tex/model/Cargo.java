@@ -4,6 +4,10 @@ public class Cargo {
 	
 	private Integer idCargo;
 	private String nome;
+	
+	public Cargo(Integer idCargo) {
+		this.idCargo=idCargo;
+	}
 
 	public Cargo(String nome, int idCargo) {
 		this.nome = nome;

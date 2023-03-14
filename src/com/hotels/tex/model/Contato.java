@@ -2,11 +2,15 @@ package com.hotels.tex.model;
 
 public class Contato {
 
-	private int idContato;
+	private Integer idContato;
 	private String email;
 	private String telefone;
 	private String celular;
 
+	public Contato(Integer idContato) {
+		this.idContato = idContato;
+	}
+	
 	public Contato(String email, String telefone, String celular, int idContato) {
 		this.idContato = idContato;
 		this.email = email;

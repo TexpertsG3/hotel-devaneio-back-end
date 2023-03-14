@@ -67,5 +67,63 @@ public class AlojamentoDAO {
 		return lista;
 
 	}
+	
+	public void update(Alojamento alojamento) {
+		String sql = "update quarto set nome=?, descricao=?, preco=?, id_hotel=? where id_quarto =? ";
+		try (Connection conn = ConnectionFactory.criaConexao();
+				PreparedStatement st = conn.prepareStatement(sql)) {
+			 	st.setString(1, alojamento.getNomeAlojamento());
+			 	st.setString(2, alojamento.getDescricao());
+			 	st.setBigDecimal(3,  alojamento.getValor());
+			 	st.setInt(4, alojamento.getHotel().getIdHotel());
+			 	st.setInt(5, alojamento.getIdAlojamento());
+			 	st.execute();
+		
+		
+		} catch (SQLException e) {
+			System.err.println(ERRO_CONEXAO + e.getMessage());
+		}
+	}
+	
+	
+	public void delete(Alojamento alojamento) {
+		String sql = "delete from quarto where id_quarto=?";
+		try (Connection conn = ConnectionFactory.criaConexao();
+				PreparedStatement st = conn.prepareStatement(sql)) {
+			 	st.setInt(1,alojamento.getIdAlojamento());
+			 	st.execute();
+		
+		} catch (SQLException e) {
+			System.err.println(ERRO_CONEXAO + e.getMessage());
+		}
+		
+		
+	}
+	
+    public Alojamento buscaPor(int id) throws SQLException {
+        Alojamento alojamento = null;
+
+        String sql = "SELECT * FROM quarto WHERE id_quarto = ?";
+
+        try (Connection conn = ConnectionFactory.criaConexao();
+             PreparedStatement st = conn.prepareStatement(sql)) {
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+
+            if (rs.next()) {
+                alojamento = new Alojamento(
+                        rs.getInt("id_quarto"),
+                        rs.getString("nome")
+                );
+
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao localizar o quarto, tente novamente após verificar a causa. \nCausa:"
+                    + e.getMessage());
+        }
+        return alojamento;
+
+    }
 
 }

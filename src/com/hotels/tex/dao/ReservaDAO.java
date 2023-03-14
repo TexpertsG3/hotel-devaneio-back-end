@@ -30,10 +30,10 @@ public class ReservaDAO {
 			st.setObject(2, reserva.getCheckOut());
 			st.setInt(3, reserva.getQuantidadeAdultos());
 			st.setInt(4, reserva.getQuantidadeCriancas());
-			st.setInt(4, reserva.getQuarto().getIdAlojamento());
-			st.setInt(5, reserva.getHotel().getIdHotel());
-			st.setBigDecimal(6, reserva.getTotalServicos());
-			st.setBigDecimal(7, reserva.getTotalReserva());
+			st.setInt(5, reserva.getQuarto().getIdAlojamento());
+			st.setInt(6, reserva.getHotel().getIdHotel());
+			st.setBigDecimal(7, reserva.getTotalServicos());
+			st.setBigDecimal(8, reserva.getTotalReserva());
 			int rowsAffected = st.executeUpdate();
 
 			if (rowsAffected > 0) {
