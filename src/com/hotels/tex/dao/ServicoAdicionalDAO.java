@@ -59,4 +59,23 @@ public class ServicoAdicionalDAO {
 
 	}
 
+	
+	public void update(ServicoAdicional servicoAdicional) {
+        String sql = "update into servico_adicional (nome, preco, id_hotel) values(?,?,?) where id_servico_adicional = ?";
+
+        try (Connection conn = ConnectionFactory.criaConexao();
+             PreparedStatement st = conn.prepareStatement(sql)) {
+            st.setString(1, servicoAdicional.getNomeServico());
+            st.setBigDecimal(2, servicoAdicional.getValorServico());
+            st.setInt(3, servicoAdicional.getIdHotel());
+            st.setInt(4, servicoAdicional.getIdServico());
+
+            hotelDao.procurarHotelPorId(servicoAdicional.getIdHotel());
+
+            st.execute();
+            System.out.println("Serviço " + servicoAdicional.getNomeServico() + " alterado com sucesso.");
+        } catch (SQLException e) {
+            System.err.println(ERRO_CONEXAO + "\n" + e.getMessage());
+        }
+    }
 }

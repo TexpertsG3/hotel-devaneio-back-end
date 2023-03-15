@@ -6,12 +6,23 @@ public class Admin {
 	private String nome;
 	private String email;
 	private String senha;
-	private Integer idHotel;
+	private Contato idContato;
+	private Endereco idEndereco;
+	private Hotel idHotel;
 
-	public Admin(String nome, String email, String senha, Integer idHotel) {
+	public Admin (Integer idAdmin, String nome) {
+		this.idAdmin=idAdmin;
+		this.nome=nome;
+	}
+	
+	public Admin(Integer idAdmin, String nome, String email, String senha, Contato idContato, Endereco idEndereco,
+			Hotel idHotel) {
+		this.idAdmin = idAdmin;
 		this.nome = nome;
 		this.email = email;
 		this.senha = senha;
+		this.idContato = idContato;
+		this.idEndereco = idEndereco;
 		this.idHotel = idHotel;
 	}
 
@@ -47,12 +58,31 @@ public class Admin {
 		this.senha = senha;
 	}
 
-	public Integer getIdHotel() {
+	public Contato getIdContato() {
+		return idContato;
+	}
+
+	public void setIdContato(Contato idContato) {
+		this.idContato = idContato;
+	}
+
+	public Endereco getIdEndereco() {
+		return idEndereco;
+	}
+
+	public void setIdEndereco(Endereco idEndereco) {
+		this.idEndereco = idEndereco;
+	}
+
+	public Hotel getIdHotel() {
 		return idHotel;
 	}
 
-	public void setIdHotel(Integer idHotel) {
+	public void setIdHotel(Hotel idHotel) {
 		this.idHotel = idHotel;
 	}
 
+	
+	
+	
 }

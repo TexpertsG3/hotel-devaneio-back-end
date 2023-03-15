@@ -1,7 +1,7 @@
 package com.hotels.tex.model;
 
 import java.math.BigDecimal;
-import java.util.Objects;
+// import java.util.Objects;
 
 import com.hotels.tex.exception.SalarioInvalidoException;
 
@@ -19,12 +19,18 @@ public class Funcionario {
 	private Contato contato;
 	private Hotel hotel;
 
-	
-	public Funcionario (Integer idFuncionario, String nome) {
-		this.idFuncionario=idFuncionario;
-		this.nome=nome;
+	public Funcionario(Integer idFuncionario) {
+		this.idFuncionario = idFuncionario;
+	}
+
+	public Funcionario(String nome) {
+		this.nome = nome;
 	}
 	
+	public Funcionario(Integer idFuncionario, String nome) {
+		this.idFuncionario = idFuncionario;
+		this.nome = nome;
+	}
 
 	public Funcionario(Integer idFuncionario, String nome, String sobrenome, BigDecimal salario, String cpf,
 			Cargo cargo, Endereco endereco, Contato contato, Hotel hotel) {
@@ -40,10 +46,22 @@ public class Funcionario {
 		this.hotel = hotel;
 	}
 
+	public Funcionario(String nome, String sobrenome, BigDecimal salario, String cpf, Cargo cargo, Endereco endereco,
+			Contato contato, Hotel hotel) {
+		this.nome = nome;
+		this.sobrenome = sobrenome;
+		this.salario = salario;
+		this.cpf = cpf;
+		this.cargo = cargo;
+		this.endereco = endereco;
+		this.contato = contato;
+		this.hotel = hotel;
+	}
+
 	public Integer getIdFuncionario() {
 		return idFuncionario;
 	}
-	
+
 	public void setIdFuncionario(Integer idFuncionario) {
 		this.idFuncionario = idFuncionario;
 	}
@@ -116,26 +134,27 @@ public class Funcionario {
 		}
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(nome, sobrenome);
-	}
+//	@Override
+//	public int hashCode() {
+//		return Objects.hash(nome, sobrenome);
+//	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Funcionario other = (Funcionario) obj;
-		return Objects.equals(nome, other.nome) && Objects.equals(sobrenome, other.sobrenome);
-	}
+//	@Override
+//	public boolean equals(Object obj) {
+//		if (this == obj)
+//			return true;
+//		if (obj == null)
+//			return false;
+//		if (getClass() != obj.getClass())
+//			return false;
+//		Funcionario other = (Funcionario) obj;
+//		return Objects.equals(nome, other.nome) && Objects.equals(sobrenome, other.sobrenome);
+//	}
 
 	@Override
 	public String toString() {
-		return "Funcionario: " + nome + " " + sobrenome + " /nCPF= " + cpf + " /nCargo= " + cargo + "/nSalário=" + salario;
-	}	
+		return "Funcionario: " + nome + " " + sobrenome + " /nCPF= " + cpf + " /nCargo= " + cargo + "/nSalário="
+				+ salario;
+	}
 
 }

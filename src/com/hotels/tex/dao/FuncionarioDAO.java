@@ -24,7 +24,7 @@ public class FuncionarioDAO {
 			
 
 
-			String sql = "INSERT INTO funcionario (nome_funcionario, sobrenome_funcionario, cpf, salario"
+			String sql = "INSERT INTO funcionario (nome_funcionario, sobrenome_funcionario, cpf, salario,"
 					+ "id_cargo, id_contato, id_endereco, id_hotel) VALUES (?,?,?,?,?,?,?,?)";
 
 			try (Connection conn = ConnectionFactory.criaConexao();
@@ -57,13 +57,12 @@ public class FuncionarioDAO {
 
 		public List<Funcionario> listagem() {					
 			
-			String sql = "SELECT d.nome, d.cnpj, c.nome, f.nome_funcionario, f.sobrenome_funcionario, f.salario, f.cpf,"
-					+ "c.id_cargo, k.id_contato,h.id_hotel, d.id_dados_hotel, e.id_endereco FROM funcionario f "
+			String sql = "SELECT c.nome, f.nome_funcionario, f.sobrenome_funcionario, f.salario, f.cpf,"
+					+ "c.id_cargo, k.id_contato,h.id_hotel, e.id_endereco FROM funcionario f "
 					+ "INNER JOIN cargo c ON f.id_cargo = c.id_cargo "
 					+ "INNER JOIN contato k ON f.id_contato = k.id_contato "
 					+ "INNER JOIN endereco e ON f.id_endereco = e.id_endereco "
-					+ "INNER JOIN hotel h ON r.id_hotel = h.id_hotel "
-					+ "INNER JOIN dados_hotel d ON f.id_dados_hotel = h.id_dados_hotel";
+					+ "INNER JOIN hotel h ON r.id_hotel = h.id_hotel ";
 					
 			
 			List<Funcionario> lista = new ArrayList<>();
@@ -85,7 +84,7 @@ public class FuncionarioDAO {
 					Hotel hotel = new Hotel(rs.getInt("id_hotel"),
 											dados);
 					
-					Funcionario funcionario = new Funcionario(rs.getInt("id_funcionario"),
+					Funcionario funcionario = new Funcionario(
 												  rs.getString("nome_funcionario"),
 												  rs.getString("sobrenome_funcionario"),
 												  rs.getBigDecimal("salario"),
@@ -106,24 +105,19 @@ public class FuncionarioDAO {
 			}
 		
 	    public void update(Funcionario funcionario) {
-	  //EU deixei tudo mas queria ver com vocês se no funcionário tem que atualizar tudo, por que o cpf e o nome da pessoas não vão mudar, certo?
-	    	//Creio que deveria ser somente o update de salario, cargo, endereço e hotel
 	    	
-	    	String sql = "UPDATE funcionario SET nome_funcionario = ?, sobrenome_funcionario = ?, cpf = ?, salario = ?, id_cargo = ?, id_contato = ?, id_endereco = ?, id_hotel = ? WHERE id_funcionario = ?";
+	    	String sql = "UPDATE funcionario SET salario = ?, id_cargo = ?, id_contato = ?, id_endereco = ?, id_hotel = ? WHERE id_funcionario = ?";
 
 	        try (Connection conn = ConnectionFactory.criaConexao();
 	             PreparedStatement st = conn.prepareStatement(sql)) {
-	            st.setString(1, funcionario.getNome());
-	            st.setString(2, funcionario.getSobrenome());
-	            st.setString(3, funcionario.getCpf());
-	            st.setBigDecimal(4, funcionario.getSalario());
-	            st.setInt(5, funcionario.getCargo().getIdCargo());
-	            st.setInt(6, funcionario.getContato().getIdContato());
-	            st.setInt(7, funcionario.getEndereco().getIdEndereco());
-	            st.setInt(8, funcionario.getHotel().getIdHotel());
-	            st.setInt(9, funcionario.getIdFuncionario());
+	            st.setBigDecimal(1, funcionario.getSalario());
+	            st.setInt(2, funcionario.getCargo().getIdCargo());
+	            st.setInt(3, funcionario.getContato().getIdContato());
+	            st.setInt(4, funcionario.getEndereco().getIdEndereco());
+	            st.setInt(5, funcionario.getHotel().getIdHotel());
+	            st.setInt(6, funcionario.getIdFuncionario());
 	            st.execute();
-	            System.out.println("Dados alterados com sucesso! \nO funcionário atualizado agora é: " + funcionario.getNome() + funcionario.getSobrenome() + "\nNúmero do cpf: " + funcionario.getCpf() + "\nSalário: " + funcionario.getSalario() + "\nCom o cargo: " + funcionario.getCargo());
+	            System.out.println("Dados alterados com sucesso! O funcionário atualizado agora é: " + funcionario.getNome() + funcionario.getSobrenome() + "\nNúmero do cpf: " + funcionario.getCpf() + "\nSalário: " + funcionario.getSalario() + "\nCom o cargo: " + funcionario.getCargo());
 
 	        } catch (SQLException e) {
 	            throw new RuntimeException("Erro ao atualizar o funcionário, tente novamente após verificar a causa. " +

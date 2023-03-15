@@ -11,6 +11,7 @@ public class ConnectionFactory {
 	public static Connection criaConexao() throws SQLException {
 		return DriverManager.getConnection("jdbc:mysql://localhost:3306/hotel_devaneio", "root", "root");
 	}
+	
 
 	public static void fecharConexao(Connection conn, PreparedStatement stmt, ResultSet rs) {
 		try {
@@ -18,7 +19,7 @@ public class ConnectionFactory {
 			rs.close();
 			stmt.close();
 		} catch (SQLException e) {
-			System.err.println("Problema ao fechar as conex√µes com o banco de dados.");
+			System.err.println("Problema ao fechar as conexıes com o banco de dados.");
 			e.printStackTrace();
 		}
 

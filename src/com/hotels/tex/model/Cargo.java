@@ -2,10 +2,10 @@ package com.hotels.tex.model;
 
 public class Cargo {
 	
-	private Integer idCargo;
+	private int idCargo;
 	private String nome;
 	
-	public Cargo(Integer idCargo) {
+	public Cargo(int idCargo) {
 		this.idCargo=idCargo;
 	}
 
@@ -19,11 +19,11 @@ public class Cargo {
 
 	}
 	
-	public Integer getIdCargo() {
+	public int getIdCargo() {
 		return idCargo;
 	}
 	
-	public void setIdCargo(Integer idCargo) {
+	public void setIdCargo(int idCargo) {
 		this.idCargo = idCargo;
 	}
 

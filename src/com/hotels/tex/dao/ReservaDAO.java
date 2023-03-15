@@ -10,6 +10,7 @@ import java.util.List;
 
 import com.hotels.tex.model.Alojamento;
 import com.hotels.tex.model.DadosHotel;
+import com.hotels.tex.model.Funcionario;
 import com.hotels.tex.model.Hospede;
 import com.hotels.tex.model.Hotel;
 import com.hotels.tex.model.Reserva;
@@ -101,4 +102,5 @@ public class ReservaDAO {
 
 	}
 
+	
 }
