@@ -42,10 +42,10 @@ public class HotelTeste {
 //		Alojamento testealoj = new Alojamento("222222222222", "asdasd", new BigDecimal(200.00), hi);
 //		alojamentoDAO.insere(testealoj);
 		
-		System.out.println(reservaDAO.listagem());
+//		System.out.println(reservaDAO.listagem());
 		//enderecoDAO.delete(1);
 		//contatoDAO.delete(1);
-		hotelDAO.delete(1);
+//		hotelDAO.delete(1);
 		
 		
 		

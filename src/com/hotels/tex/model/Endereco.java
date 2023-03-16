@@ -21,6 +21,21 @@ public class Endereco {
 		this.uf = uf;
 		this.complemento = complemento;
 	}
+	public Endereco(Integer idEndereco , String rua, String bairro, Integer numero, String cep, String cidade, String uf,
+			String complemento) {
+		this.idEndereco = idEndereco;
+		this.rua = rua;
+		this.bairro = bairro;
+		this.numero = numero;
+		this.cep = cep;
+		this.cidade = cidade;
+		this.uf = uf;
+		this.complemento = complemento;
+	}
+
+	public Endereco(Integer idEndereco) {
+		this.idEndereco = idEndereco;
+	}
 
 	public Integer getIdEndereco() {
 		return idEndereco;

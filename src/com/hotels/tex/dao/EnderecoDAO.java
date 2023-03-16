@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import com.hotels.tex.model.Contato;
 import com.hotels.tex.model.Endereco;
 import com.hotels.tex.utils.ConnectionFactory;
 
@@ -66,5 +67,38 @@ public class EnderecoDAO {
 		} catch (SQLException e) {
 	        throw new RuntimeException("Erro ao verificar se existe um endereco com o id " + idEndereco + ": " + e.getMessage());
 	    }
+	}
+
+	public Endereco buscaPor(Integer id) throws SQLException {
+		Endereco endereco = null;
+
+		String sql = "SELECT * FROM endereco WHERE id_endereco = ?";
+
+		try (Connection conn = ConnectionFactory.criaConexao();
+		     PreparedStatement st = conn.prepareStatement(sql)) {
+			st.setInt(1, id);
+			ResultSet rs = st.executeQuery();
+
+
+			if (rs.next()) {
+				endereco = new Endereco(
+						rs.getInt("id_endereco"),
+						rs.getString("rua"),
+						rs.getString("bairro"),
+						rs.getInt("numero"),
+						rs.getString("cep"),
+						rs.getString("cidade"),
+						rs.getString("uf"),
+						rs.getString("complemento")
+				);
+
+			}
+
+		} catch (SQLException e) {
+			throw new RuntimeException("Erro ao atualizar o endereço, tente novamente após verificar a causa. Causa:"
+					+ e.getMessage());
+		}
+		return endereco;
+
 	}
 }

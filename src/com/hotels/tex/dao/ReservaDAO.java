@@ -1,18 +1,23 @@
 package com.hotels.tex.dao;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import com.hotels.tex.model.Alojamento;
 import com.hotels.tex.model.DadosHotel;
+import com.hotels.tex.model.Funcionario;
 import com.hotels.tex.model.Hospede;
 import com.hotels.tex.model.Hotel;
 import com.hotels.tex.model.Reserva;
+import com.hotels.tex.model.ServicoAdicional;
 import com.hotels.tex.utils.ConnectionFactory;
 
 public class ReservaDAO {
@@ -30,10 +35,10 @@ public class ReservaDAO {
 			st.setObject(2, reserva.getCheckOut());
 			st.setInt(3, reserva.getQuantidadeAdultos());
 			st.setInt(4, reserva.getQuantidadeCriancas());
-			st.setInt(4, reserva.getQuarto().getIdAlojamento());
-			st.setInt(5, reserva.getHotel().getIdHotel());
-			st.setBigDecimal(6, reserva.getTotalServicos());
-			st.setBigDecimal(7, reserva.getTotalReserva());
+			st.setInt(5, reserva.getQuarto().getIdAlojamento());
+			st.setInt(6, reserva.getHotel().getIdHotel());
+			st.setBigDecimal(7, reserva.getTotalServicos());
+			st.setBigDecimal(8, reserva.getTotalReserva());
 			int rowsAffected = st.executeUpdate();
 
 			if (rowsAffected > 0) {
@@ -100,5 +105,83 @@ public class ReservaDAO {
 		return lista;
 
 	}
+	
+	  public void update(Reserva reserva) {
+	    	
+		  //check_in, check_out, qtd_adultos, qtd_criancas,id_quarto, total_servicos, total_reserva"
+					
+	    	String sql = "UPDATE reserva SET check_in = ?, check_out = ?, qtd_adultos = ?, qtd_criancas = ?, id_quarto = ?, id_hotel=?, total_servicos = ?, total_reserva = ?  WHERE id_reserva = ?";
 
-}
+	        try (Connection conn = ConnectionFactory.criaConexao();
+	             PreparedStatement st = conn.prepareStatement(sql)) {
+	        	st.setObject(1, reserva.getCheckIn());
+				st.setObject(2, reserva.getCheckOut());
+				st.setInt(3, reserva.getQuantidadeAdultos());
+				st.setInt(4, reserva.getQuantidadeCriancas());
+				st.setInt(5, reserva.getQuarto().getIdAlojamento());
+				st.setInt(6, reserva.getHotel().getIdHotel());
+				st.setBigDecimal(7, reserva.getTotalServicos());
+				st.setBigDecimal(8, reserva.getTotalReserva());
+				st.setInt(8, reserva.getIdReserva());
+	            st.execute();
+	            System.out.println("Dados alterados com sucesso! ");
+
+	        } catch (SQLException e) {
+	            throw new RuntimeException("Erro ao atualizar a reserva, tente novamente após verificar a causa. " +
+	                    "Causa:"
+	                    + e.getMessage());
+	        }
+	    }
+
+	    public Reserva buscaPor(int id) throws SQLException {
+	        Reserva reserva = null;
+
+	        String sql = "SELECT * FROM reserva WHERE id_reserva = ?";
+
+	        try (Connection conn = ConnectionFactory.criaConexao();
+	             PreparedStatement st = conn.prepareStatement(sql)) {
+	            st.setInt(1, id);
+	            ResultSet rs = st.executeQuery();
+
+	            if (rs.next()) {
+	                reserva = new Reserva(
+	                		rs.getInt("id_reserva")     
+	                );
+
+	            }
+
+	        } catch (SQLException e) {
+	            throw new RuntimeException("Erro ao localizar a reserva, tente novamente após verificar a causa. \nCausa:"
+	                    + e.getMessage());
+	        }
+	        return reserva;
+
+	    }
+	    	    
+	    public void delete(Integer idReserva) {
+	        String sql = "SELECT * FROM reserva WHERE id_reserva = ?";
+
+	        String sql2 = "DELETE FROM reserva WHERE id_reserva = ?";
+
+	        try (Connection conn = ConnectionFactory.criaConexao();
+	             PreparedStatement st1 = conn.prepareStatement(sql);
+	             PreparedStatement st2 = conn.prepareStatement(sql2)) {
+
+	            st1.setInt(1, idReserva);
+	            ResultSet rs = st1.executeQuery();
+
+	            if (!rs.next()) {
+	                throw new SQLException("Não existe nenhuma reserva cadastrada no id " + idReserva);
+	            }
+
+	            System.out.println("Reserva de id " + idReserva + " deletado com suceso!");
+
+	            st2.setInt(1, idReserva);
+	            st2.executeUpdate();
+
+
+	        } catch (SQLException e) {
+	            throw new RuntimeException("Erro ao verificar se existe uma reserva com o id " + idReserva + ": " + e.getMessage());
+	        }
+	    }
+	}

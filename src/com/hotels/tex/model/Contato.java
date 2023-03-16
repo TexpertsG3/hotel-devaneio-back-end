@@ -2,18 +2,28 @@ package com.hotels.tex.model;
 
 public class Contato {
 
-	private Integer idContato;
+	private int idContato;
 	private String email;
 	private String telefone;
 	private String celular;
 
+	public Contato(String email, String telefone, String celular, int idContato) {
+		this.idContato = idContato;
+		this.email = email;
+		this.telefone = telefone;
+		this.celular = celular;
+	}
 	public Contato(String email, String telefone, String celular) {
 		this.email = email;
 		this.telefone = telefone;
 		this.celular = celular;
 	}
 
-	public Integer getIdContato() {
+	public Contato(int idContato) {
+
+	}
+
+	public int getIdContato() {
 		return idContato;
 	}
 

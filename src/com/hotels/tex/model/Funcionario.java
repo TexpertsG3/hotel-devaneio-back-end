@@ -1,27 +1,61 @@
 package com.hotels.tex.model;
 
 import java.math.BigDecimal;
-import java.util.Objects;
+// import java.util.Objects;
 
 import com.hotels.tex.exception.SalarioInvalidoException;
 
 public class Funcionario {
 
-	private static final String MSG_SALARIO_INVALIDO = "O valor digitado é inválido. Deve ser maior que 0";
+	private static final String MSG_SALARIO_INVALIDO = "O valor digitado � inv�lido. Deve ser maior que 0";
 
 	private Integer idFuncionario;
 	private String nome;
 	private String sobrenome;
-	private Cargo cargo;
 	private BigDecimal salario;
-	private Integer idHotel;
+	private String cpf;
+	private Cargo cargo;
+	private Endereco endereco;
+	private Contato contato;
+	private Hotel hotel;
 
-	public Funcionario(String nome, String sobrenome, Cargo cargo, BigDecimal salario, Integer idHotel) {
-		this.idHotel = idHotel;
+	public Funcionario(Integer idFuncionario) {
+		this.idFuncionario = idFuncionario;
+	}
+
+	public Funcionario(String nome) {
+		this.nome = nome;
+	}
+	
+	public Funcionario(Integer idFuncionario, String nome) {
+		this.idFuncionario = idFuncionario;
+		this.nome = nome;
+	}
+
+	public Funcionario(Integer idFuncionario, String nome, String sobrenome, BigDecimal salario, String cpf,
+			Cargo cargo, Endereco endereco, Contato contato, Hotel hotel) {
+		super();
+		this.idFuncionario = idFuncionario;
 		this.nome = nome;
 		this.sobrenome = sobrenome;
-		this.cargo = cargo;
 		this.salario = salario;
+		this.cpf = cpf;
+		this.cargo = cargo;
+		this.endereco = endereco;
+		this.contato = contato;
+		this.hotel = hotel;
+	}
+
+	public Funcionario(String nome, String sobrenome, BigDecimal salario, String cpf, Cargo cargo, Endereco endereco,
+			Contato contato, Hotel hotel) {
+		this.nome = nome;
+		this.sobrenome = sobrenome;
+		this.salario = salario;
+		this.cpf = cpf;
+		this.cargo = cargo;
+		this.endereco = endereco;
+		this.contato = contato;
+		this.hotel = hotel;
 	}
 
 	public Integer getIdFuncionario() {
@@ -48,6 +82,14 @@ public class Funcionario {
 		this.sobrenome = sobrenome;
 	}
 
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
 	public Cargo getCargo() {
 		return cargo;
 	}
@@ -56,16 +98,32 @@ public class Funcionario {
 		this.cargo = cargo;
 	}
 
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
+	}
+
+	public Contato getContato() {
+		return contato;
+	}
+
+	public void setContato(Contato contato) {
+		this.contato = contato;
+	}
+
 	public BigDecimal getSalario() {
 		return salario;
 	}
 
-	public Integer getIdHotel() {
-		return idHotel;
+	public void setSalario(BigDecimal salario) {
+		this.salario = salario;
 	}
 
-	public void setIdHotel(Integer idHotel) {
-		this.idHotel = idHotel;
+	public Hotel getHotel() {
+		return hotel;
 	}
 
 	public void modificarSalarioFuncionario(BigDecimal novoSalario) {
@@ -76,27 +134,27 @@ public class Funcionario {
 		}
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(nome, sobrenome);
-	}
+//	@Override
+//	public int hashCode() {
+//		return Objects.hash(nome, sobrenome);
+//	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Funcionario other = (Funcionario) obj;
-		return Objects.equals(nome, other.nome) && Objects.equals(sobrenome, other.sobrenome);
-	}
+//	@Override
+//	public boolean equals(Object obj) {
+//		if (this == obj)
+//			return true;
+//		if (obj == null)
+//			return false;
+//		if (getClass() != obj.getClass())
+//			return false;
+//		Funcionario other = (Funcionario) obj;
+//		return Objects.equals(nome, other.nome) && Objects.equals(sobrenome, other.sobrenome);
+//	}
 
 	@Override
 	public String toString() {
-		return "\nNome: " + this.nome + "\nSobrenome: " + this.sobrenome + "\nCargo: " + this.cargo + "\nSalário: R$"
-				+ this.salario;
+		return "Funcionario: " + nome + " " + sobrenome + " /nCPF= " + cpf + " /nCargo= " + cargo + "/nSal�rio="
+				+ salario;
 	}
 
 }

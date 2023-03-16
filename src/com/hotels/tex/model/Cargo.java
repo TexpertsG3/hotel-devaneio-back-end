@@ -5,11 +5,19 @@ public class Cargo {
 	private Integer idCargo;
 	private String nome;
 
+	public Cargo(String nome, int idCargo) {
+		this.nome = nome;
+		this.idCargo = idCargo;
+
+	}
 	public Cargo(String nome) {
 		this.nome = nome;
 
 	}
-	
+
+	public Cargo(int idCargo) {}
+
+
 	public Integer getIdCargo() {
 		return idCargo;
 	}
