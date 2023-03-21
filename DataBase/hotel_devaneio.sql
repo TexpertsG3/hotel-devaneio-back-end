@@ -1,4 +1,4 @@
-use hotel_devaneio;
+create schema if not exists hote_devaneio;
 
 create table if not exists cargo
 (
